@@ -1,28 +1,28 @@
 ---
 title: Async installs, notifications, and settings that don't erase each other
-summary: Installing large resources in Solution Launchpad could take several minutes while users waited on screen. I made installs notify users by email and in-app when they finish, built the Tenant Settings entity, API and cache layer from scratch, and fixed a partial-update bug that silently dropped unrelated settings.
+summary: Installing large content bundles in a marketplace could take several minutes while users waited on screen. I made installs notify users by email and in-app when they finish, built the Tenant Settings entity, API and cache layer from scratch, and fixed a partial-update bug that silently dropped unrelated settings.
 themes: [platform, integration]
 weight: 3
-context: Solution Launchpad (Thryv/Keap)
-stack: [Java, Micronaut, PostgreSQL, Notifications API]
+context: Content marketplace platform (Thryv/Keap)
+stack: [Java, Micronaut, PostgreSQL]
 short: Async installs and per-tenant settings
 hook: Users no longer wait on screen for long installs, and tenants can opt out of notifications without losing other settings.
 stats:
   - { value: "2", label: "notification channels: email and in-app" }
 tldr:
-  - "**Problem:** installing large bundles or Advanced Automation took several minutes, with no feedback."
+  - "**Problem:** installing large bundles or automations took several minutes, with no feedback."
   - "**Built:** install-completion notifications, and a Tenant Settings entity, API and cache layer from scratch."
   - "**Fixed:** a partial-update bug that erased unrelated settings when one changed."
 ---
 
 ## Problem
 
-In Solution Launchpad, installing large resources, such as **Advanced Automation or large bundles**, could take several minutes. Users had to wait on screen with no feedback.
+In the marketplace, installing large resources, such as **large automations or bundles**, could take several minutes. Users had to wait on screen with no feedback.
 
 ## Notifications
 
 - I analyzed the install flow to find where notifications could be triggered without disrupting it.
-- I designed and built the integration between the Packaging Service and the **Notifications API**, supporting both **email and in-app** notifications, with an email allow-list and the relevant content details in each message.
+- I designed and built the integration between our service and the company's **notification platform**, supporting both **email and in-app** notifications, with an email allow-list and the relevant content details in each message.
 - I worked with frontend and backend teams so the flow matched the overall experience, and with the team that owns email delivery to configure and enable it.
 - I validated the flow end to end by simulating long-running installs and confirming notifications fired correctly.
 

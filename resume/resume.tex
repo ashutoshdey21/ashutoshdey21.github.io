@@ -213,14 +213,14 @@
         \vspace{0.10 cm}
         \begin{onecolentry}
             \begin{highlights}
-                \item Built Typeform-Keap integration adopted by \textbf{$\sim$20\% of customers}, contributing to \textbf{10\%} customer growth.
-                \item Led the migration of the Play service database from Heroku Postgres to \textbf{GCP CloudSQL} and upgraded the Java/Micronaut BOM -- cut infrastructure cost by \textbf{70\%} while improving security posture and moving the service under SRE-managed support.
+                \item Built a third-party form integration adopted by \textbf{$\sim$20\% of customers}, contributing to \textbf{10\%} customer growth.
+                \item Led the migration of a service database from Heroku Postgres to \textbf{GCP CloudSQL} and upgraded the Java/Micronaut BOM -- cut infrastructure cost by \textbf{70\%} while improving security posture and moving the service under SRE-managed support.
                 \item Reduced install/export failures by \textbf{35\%} via transaction-scoped \textbf{PostgreSQL advisory locks} coordinating shared resources under high concurrency.
                 \item Built a \textbf{Pub/Sub}-driven account-role-permission sync and fixed a misconfigured event listener, preventing a critical customer-facing defect that would have blocked user access.
                 \item Built BFF \textbf{GraphQL} resolvers to integrate multiple data sources and batch paginated API calls into single responses; reduced network round-trips by \textbf{$\sim$20\%} and improved p95 data-fetch latency.
                 \item Cut Tasks page load time from \textbf{8.6s} to \textbf{3.53s} by slimming API payloads and combining required fields.
                 \item Implemented token pagination enabling \textbf{100K}-deal lists and \textbf{$\sim$10x} scale improvements for list operations.
-                \item Built a shareable resource-ID endpoint for the Packaging Service; accelerated lookups by \textbf{50\%} via tuned queries/repositories.
+                \item Built a shareable resource-ID endpoint; accelerated lookups by \textbf{50\%} via tuned queries/repositories.
                 \item Improved DX and onboarding time by \textbf{25\%} through Swagger docs and clear error contracts.
                 \item Built a multi-agent \textbf{Claude Code} pipeline (\texttt{/dev-workflow}) taking Jira tickets to PRs through five sub-agents with explicit tool allowlists, human confirmation at every phase, and a capped verify $\to$ fix loop; added a self-reflect agent that turns PR reviewer feedback into agent-instruction updates and persistent memory.
                 \item Collaborated with Product, Analytics, and go-to-market stakeholders to translate planning/reporting requirements into technical designs; delivered features in Agile sprints with clear acceptance criteria.

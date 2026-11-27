@@ -10,7 +10,7 @@ I was adding a Pub/Sub subscription through Terraform when the plan showed modif
 
 **Don't apply through it.** The unexpected changes came from database migrations the SRE team was running across regions. Applying my change risked conflicting with their in-progress work.
 
-**Coordinate, then wait.** I confirmed with SRE that my change had to wait for their migration, and helped test the Packaging Service's database changes in the integration environment in the meantime.
+**Coordinate, then wait.** I confirmed with SRE that my change had to wait for their migration, and helped test our service's database changes in the integration environment in the meantime.
 
 **Decouple so nothing stalls.** I tracked the infrastructure change and the migration under one ticket for visibility, and kept the application logic moving on a separate ticket. When the migration finished, I merged the subscription safely.
 

@@ -3,7 +3,7 @@ title: Latency and error budgets as CI gates
 summary: I stood up a K6 load-test harness with WireMock-backed mocks for external services, then wrote suites for every major endpoint group, so CI fails when error rate reaches 1% or p95 latency reaches 500ms.
 themes: [reliability, platform]
 weight: 4
-context: Solution Launchpad (Thryv/Keap)
+context: Content marketplace platform (Thryv/Keap)
 stack: [K6, WireMock, CI]
 short: Latency and error budgets in CI
 hook: Every major endpoint group now has to stay under 1% errors and 500ms p95 before code ships.
@@ -24,7 +24,7 @@ There was no shared harness for measuring **endpoint latency and error rates** u
 ## What I built
 
 - **A harness first.** I set up the K6 load-test foundation: scenarios, thresholds, and **WireMock-backed mocks** for external services.
-- **Then coverage.** I wrote suites for every major endpoint group, **14 in all**: tenants, consent, shared and shareable resources, links, public preview, categories, bundles, export requests, permissions, tracked resources, tenant-scoped tracked resources, installs, batch requests, and packaging requests.
+- **Then coverage.** I wrote suites for every major endpoint group, **14 in all**, from tenants and permissions to installs and batch requests.
 - **Then the gate.** Each group runs in CI against explicit thresholds: **error rate under 1% and p95 latency under 500ms**.
 
 ## Outcome

@@ -11,7 +11,7 @@ featured: [advisory-locks, debugging-the-unreproducible, cross-cloud-sqs-consume
 results:
   - { value: "70%", label: "lower infrastructure cost", sub: "Heroku Postgres to GCP CloudSQL migration" }
   - { value: "35%", label: "fewer install/export failures", sub: "Transaction-scoped Postgres advisory locks", href: "/work/advisory-locks/" }
-  - { value: "~20%", label: "of customers adopted an integration I built", sub: "Typeform–Keap; contributed to 10% customer growth" }
+  - { value: "~20%", label: "of customers adopted an integration I built", sub: "A third-party form integration; contributed to 10% customer growth" }
   - { value: "<500ms", label: "p95 latency gate in CI", sub: "K6 load tests on every major endpoint group, error rate <1%" }
 # Hero: keep it to one breath.
 hero:

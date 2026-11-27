@@ -3,7 +3,7 @@ title: Cross-cloud auth with no static keys, and the bug that would have looped 
 summary: A GKE service needed to consume AWS SQS billing events without any AWS credentials on the pod. I built a Workload Identity to AWS STS federation chain and found, before launch, a silent framework bug that would have sent every successfully processed message to the dead-letter queue.
 themes: [integration, reliability]
 weight: 5
-context: Coaching Portal service (Thryv/Keap)
+context: Customer-facing Java service (Thryv/Keap)
 stack: [Java 21, Micronaut, AWS SQS, AWS SNS, AWS STS, GCP Workload Identity, JUnit 5, Mockito]
 short: Cross-cloud auth with zero static keys
 status: Design write-up · not yet live
@@ -22,7 +22,7 @@ tldr:
 
 ## Problem
 
-The Coaching Portal service, running on Google Kubernetes Engine, needed to react to Recurly `subscription.created` billing events. Those events arrive through AWS SNS into an AWS SQS queue. The goal was to react to subscription lifecycle events without polling or coupling to the legacy billing system.
+A customer-facing Java service, running on Google Kubernetes Engine, needed to react to subscription billing events from a third-party billing provider. Those events arrive through AWS SNS into an AWS SQS queue. The goal was to react to subscription lifecycle events without polling or coupling to the legacy billing system.
 
 I was the **sole author: all 15 commits**. The AWS-side infrastructure (queue, dead-letter queue, IAM role, SNS topic, CloudWatch alarm) is owned and provisioned separately; this service consumes it through config.
 
@@ -35,12 +35,12 @@ I was the **sole author: all 15 commits**. The AWS-side infrastructure (queue, d
 ## Architecture
 
 ```
-Recurly -> upstream enrichment -> AWS SNS -> AWS SQS
+Billing provider -> enrichment -> AWS SNS -> AWS SQS
           (visibility timeout 300s, max receive count 5)
    |  GKE Workload Identity -> Google ID token
    |  -> AWS STS AssumeRoleWithWebIdentity -> temporary AWS credentials
    v
-Coaching Portal service (GKE)
+Our service (GKE)
   listener (UNORDERED_ACKNOWLEDGE, prefetch 0)
     -> transformer (wire DTO -> domain model) -> service
   success   -> success handler deletes that one message
@@ -53,7 +53,7 @@ Coaching Portal service (GKE)
 - **Federated identity instead of keys.** I built a token provider that mints a Google ID token for the `sts.amazonaws.com` audience. The existing internal token provider hardcoded a different audience, so it could not be reused. A supplier feeds it into the STS web-identity credentials provider, so **a fresh token is minted on every credential refresh**. Result: a zero-static-key OIDC chain from GKE to SQS, a pattern the service did not have before.
 - **Managed listener instead of a custom poller.** I replaced the hand-rolled polling loop with `micronaut-jms-sqs`'s listener. That removed a custom poller and its executor lifecycle, trading fine-grained polling control for less code to own.
 - **Acknowledge one message, not the batch.** The library default, `CLIENT_ACKNOWLEDGE`, acknowledges the whole prefetched batch rather than the one message that succeeded, which can silently delete unrelated failed messages. I chose `UNORDERED_ACKNOWLEDGE` with a custom success handler.
-- **Retryable vs. permanent as a domain decision.** Instead of retrying everything, failures are explicitly classified, following an existing Packaging Service pattern. SQS's own receive count (5) is the only authority on redelivery; the app does not track attempts.
+- **Retryable vs. permanent as a domain decision.** Instead of retrying everything, failures are explicitly classified, following an existing pattern from another service. SQS's own receive count (5) is the only authority on redelivery; the app does not track attempts.
 - **Fail loudly on bad input.** Strict typed DTOs rely on raw message delivery on the SNS subscription instead of parsing an SNS envelope in code, so malformed input goes to the discard path instead of deserializing into blank fields.
 
 ## The bug found before launch

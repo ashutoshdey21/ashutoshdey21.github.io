@@ -1,9 +1,9 @@
 ---
 title: Moving a service off Heroku when the database clock started ticking
-summary: I was assigned to migrate the Coaching Portal service from Heroku to GCP and upgrade its Java BOM. A Heroku notice about an impending database auto-upgrade changed the order of work. I led the database migration to GCP CloudSQL first, then finished the upgrade, cutting infrastructure cost by 70%.
+summary: I was assigned to migrate a customer-facing Java service from Heroku to GCP and upgrade its Java BOM. A Heroku notice about an impending database auto-upgrade changed the order of work. I led the database migration to GCP CloudSQL first, then finished the upgrade, cutting infrastructure cost by 70%.
 themes: [reliability, platform, integrity]
 weight: 5
-context: Coaching Portal service (Thryv/Keap)
+context: Customer-facing Java service (Thryv/Keap)
 stack: [Java, Micronaut, PostgreSQL, GCP CloudSQL, Heroku, Terraform, CircleCI]
 short: Heroku Postgres to GCP CloudSQL
 hook: Re-planned a migration around a forced database upgrade, moved the data with its integrity intact, and cut infrastructure cost by 70%.
@@ -19,7 +19,7 @@ tldr:
 
 ## Problem
 
-I was assigned to move the Coaching Portal service from Heroku to GCP and to update its Java BOM, which was out of date. My first assessment showed the service did not follow standard practices and was not production-ready as a microservice.
+I was assigned to move a customer-facing Java service from Heroku to GCP and to update its Java BOM, which was out of date. My first assessment showed the service did not follow standard practices and was not production-ready as a microservice.
 
 I started with the BOM upgrade. Then Heroku sent a notice about an **impending automatic upgrade of the database**, and the priority changed: data integrity and service continuity came first.
 
@@ -27,7 +27,7 @@ I started with the BOM upgrade. Then Heroku sent a notice about an **impending a
 
 - The database move could not wait for the dependency upgrade to finish.
 - No data could be lost, and the service had to keep running.
-- The service lacked the standard setup the platform team expected.
+- The service did not follow standard practices.
 
 ## Approach
 
@@ -35,8 +35,8 @@ I started with the BOM upgrade. Then Heroku sent a notice about an **impending a
 - **Planned in pieces.** I broke the work into epics, asked for end-to-end tests to protect existing behavior, and used frontend feature flags to control the cutover in each environment.
 - **Kept the data move simple.** I designed a migration approach that was simple, reliable and cheap to run, with clear execution steps.
 - **Fixed what the migration exposed.** The schema had circular references. I preserved the data and corrected the schema in GCP.
-- **Made deployments repeatable.** I updated Terraform and CircleCI so every environment deployed the same way and post-migration fixes could ship everywhere. That included a CircleCI machine user, schema setup, and endpoint fixes across integration, staging and production.
-- **Cleaned up the edges.** I removed legacy Heroku server URLs, fixed cross-origin handling for the frontend, pointed identity-service URLs at the right staging and production endpoints, and decommissioned Heroku.
+- **Made deployments repeatable.** I updated Terraform and CircleCI so every environment deployed the same way and post-migration fixes could ship everywhere. That covered all three environments: integration, staging and production.
+- **Cleaned up the edges.** I removed legacy Heroku server URLs, fixed cross-origin handling for the frontend, pointed identity-provider URLs at the right staging and production endpoints, and decommissioned Heroku.
 
 ## Then the upgrade
 
