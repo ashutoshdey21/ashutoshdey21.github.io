@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const items = (await getCollection('projects')).sort((a, b) => b.data.weight - a.data.weight);
+---
+<Base title="Projects | Ashutosh Dey" description="Projects by Ashutosh Dey, backend engineer: neurostore and a multi-agent ticket-to-PR workflow.">
+  <p><a href="/">Ashutosh Dey</a></p>
+  <h1>Projects</h1>
+  <ul>
+    {items.map((p) => (
+      <li><a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.summary}</li>
+    ))}
+  </ul>
+</Base>

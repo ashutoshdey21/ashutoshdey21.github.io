@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  return (await getCollection('projects')).map((p) => ({ params: { slug: p.id }, props: { p } }));
+}
+const { p } = Astro.props;
+const { Content } = await render(p);
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': p.data.repo ? 'SoftwareSourceCode' : 'CreativeWork',
+  name: p.data.title,
+  description: p.data.summary,
+  author: { '@type': 'Person', name: 'Ashutosh Dey', url: 'https://ashutoshdey21.github.io/' },
+  ...(p.data.repo && { codeRepository: p.data.repo }),
+  ...(p.data.language && { programmingLanguage: p.data.language }),
+  url: new URL(`/projects/${p.id}/`, Astro.site).href,
+};
+---
+<Base title={`${p.data.title} | Ashutosh Dey`} description={p.data.summary}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(ld)} />
+  <p><a href="/">Ashutosh Dey</a> / <a href="/projects/">Projects</a></p>
+  <h1>{p.data.title}</h1>
+  <p class="muted">{p.data.summary}</p>
+  {p.data.links.length > 0 && <p>{p.data.links.map((l, i) => <>{i > 0 && ' · '}<a href={l.href}>{l.label}</a></>)}</p>}
+  <Content />
+</Base>
