@@ -12,7 +12,7 @@ const items = (await getCollection('work'))
   .sort((a, b) => (a.data.themes.indexOf(lens) - b.data.themes.indexOf(lens)) || (b.data.weight - a.data.weight));
 ---
 <Base title={`${LENSES[lens]} | Work | Ashutosh Dey`} description={`Case studies by Ashutosh Dey on ${LENSES[lens].toLowerCase()}.`}>
-  <p><a href="/">Ashutosh Dey</a> / <a href="/work/">Work</a></p>
+  <p class="crumbs"><a href="/work/">Work</a></p>
   <h1>{LENSES[lens]}</h1>
   <WorkList items={items} active={lens} />
   {items.length === 0 && <p class="muted">More case studies for this lens are coming.</p>}

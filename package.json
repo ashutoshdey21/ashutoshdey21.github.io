@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/denylist.mjs && astro build",
+    "build": "node scripts/denylist.mjs && astro build && node scripts/denylist.mjs dist",
     "preview": "astro preview",
     "denylist": "node scripts/denylist.mjs",
     "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
-    "astro": "^7.4.13"
+    "astro": "^7.4.13",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
   }
 }

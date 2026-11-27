@@ -5,3 +5,4 @@ dist/
 # Private working files: contain internal identifiers, never commit
 PLAN.md
 denylist.local.txt
+CLAUDE.local.md

@@ -1,14 +1,70 @@
 ---
 import Base from '../layouts/Base.astro';
+import { positioning, profile, allContent, personLd, SITE } from '../lib/data';
+import { LENSES } from '../content.config';
+const { work } = await allContent();
+const featured = positioning.featured.map((id: string) => work.find((w) => w.id === id)).filter(Boolean);
+const ld = [
+  personLd(),
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Ashutosh Dey', url: `${SITE}/`, author: { '@id': `${SITE}/#person` } },
+];
 ---
-<Base title="Ashutosh Dey: backend engineer" description="Ashutosh Dey is a backend engineer based in San Francisco / Redwood City, CA. Portfolio under construction.">
-  <h1>Ashutosh Dey</h1>
-  <p>Backend engineer. San Francisco / Redwood City, CA.</p>
-  <p class="muted">Portfolio under construction.</p>
-  <p>
-    <a href="https://github.com/ashutoshdey21" rel="me">GitHub</a> ·
-    <a href="https://www.linkedin.com/in/ashutoshdey" rel="me">LinkedIn</a> ·
-    <a href="/work/">Work</a> ·
-    <a href="/projects/">Projects</a>
-  </p>
+<Base title="Ashutosh Dey · Backend engineer" description={`${positioning.descriptor}. ${positioning.headline}`} jsonld={ld} type="profile" mdTwin="/index.md">
+  <section class="hero">
+    <p class="kicker">Ashutosh Dey · {profile.jobTitle} at {profile.experience[0].org} · {profile.location}</p>
+    <h1>{positioning.headline}</h1>
+    <p class="lede">{positioning.throughline}</p>
+    <p class="links">
+      <a href="/work/">Read the case studies</a> ·
+      <a href={profile.links.github} rel="me">GitHub</a> ·
+      <a href={profile.links.linkedin} rel="me">LinkedIn</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="results">
+    <h2 id="results">Selected results</h2>
+    <ul class="results">
+      {positioning.results.map((r: any) => <li><strong>{r.value}</strong><span>{r.label}</span></li>)}
+    </ul>
+  </section>
+
+  <section aria-labelledby="featured">
+    <h2 id="featured">Featured work</h2>
+    <ol class="featured">
+      {featured.map((w: any) => (
+        <li>
+          <p class="lens">{LENSES[w.data.themes[0] as keyof typeof LENSES]}</p>
+          <h3><a href={`/work/${w.id}/`}>{w.data.title}</a></h3>
+          <p>{w.data.summary}</p>
+        </li>
+      ))}
+    </ol>
+    <p><a href="/work/">All case studies →</a></p>
+  </section>
+
+  <section aria-labelledby="ai">
+    <h2 id="ai">{positioning.ai.heading}</h2>
+    <p>{positioning.ai.body}</p>
+    <p><a href={positioning.ai.link}>How the workflow is designed →</a></p>
+  </section>
+
+  <section aria-labelledby="code">
+    <h2 id="code">Open source</h2>
+    <p><a href="/projects/neurostore/">neurostore</a>: a small Python library for multi-channel time-series recordings with write-once files, SHA-256 checks on every read and a transactional audit log. Synthetic data only.</p>
+  </section>
 </Base>
+<style>
+  .hero { padding-bottom:.5rem; }
+  .kicker { color:var(--muted); font-size:.92rem; margin:0; }
+  .hero h1 { font-size:clamp(1.75rem, 5vw, 2.5rem); margin:.6rem 0 1rem; }
+  .lede { font-size:1.08rem; }
+  .results { list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr)); gap:.75rem; }
+  .results li { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; display:flex; flex-direction:column; gap:.2rem; }
+  .results strong { font-size:1.5rem; color:var(--accent); line-height:1.2; }
+  .results span { font-size:.92rem; color:var(--muted); line-height:1.45; }
+  .featured { list-style:none; padding:0; }
+  .featured li { border-top:1px solid var(--line); padding:1rem 0 .4rem; }
+  .featured h3 { margin:.1rem 0 .3rem; }
+  .featured p { margin:.2rem 0; }
+  .lens { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+</style>

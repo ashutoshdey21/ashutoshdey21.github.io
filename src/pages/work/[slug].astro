@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import { LENSES } from '../../content.config';
+import { authorRef } from '../../lib/data';
 export async function getStaticPaths() {
   return (await getCollection('work')).map((w) => ({ params: { slug: w.id }, props: { w } }));
 }
@@ -13,16 +14,16 @@ const ld = {
   '@type': 'TechArticle',
   headline: w.data.title,
   description: w.data.summary,
-  author: { '@type': 'Person', name: 'Ashutosh Dey', url: 'https://ashutoshdey21.github.io/' },
+  author: authorRef,
   keywords: [...w.data.themes.map((t) => LENSES[t]), ...w.data.stack].join(', '),
   license: 'https://creativecommons.org/licenses/by/4.0/',
   url,
   mainEntityOfPage: url,
 };
 ---
-<Base title={`${w.data.title} | Ashutosh Dey`} description={w.data.summary}>
+<Base title={`${w.data.title} | Ashutosh Dey`} description={w.data.summary} type="article" mdTwin={`/work/${w.id}.md`}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(ld)} />
-  <p><a href="/">Ashutosh Dey</a> / <a href="/work/">Work</a></p>
+  <p class="crumbs"><a href="/work/">Work</a></p>
   <article>
     <h1>{w.data.title}</h1>
     <p class="muted">{w.data.context}{w.data.stack.length > 0 && <> · {w.data.stack.join(', ')}</>}</p>
@@ -30,6 +31,3 @@ const ld = {
     <Content />
   </article>
 </Base>
-<style is:global>
-  article pre { overflow-x:auto; padding:1rem; border:1px solid var(--muted); border-radius:6px; font-size:.8rem; line-height:1.4; }
-</style>

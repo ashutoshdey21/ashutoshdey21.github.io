@@ -1,13 +1,14 @@
 # SOURCES
 
 One row per public page. Status: draft / reviewed / published. Facts verified: yes/no.
-Source paths are relative to the private `resume-work/data/` folder.
+Source paths are relative to the private `resume-work/data/` folder, except `resume.tex` and `linkedin-profile-draft.md`, which are in `resume-work/`.
 
 | Public page | Source file(s) | Last synced | Status | Facts verified |
 |---|---|---|---|---|
-| `/` (placeholder) | none | 2026-11-26 | draft | n/a |
+| `/` home, `positioning.yaml` | results: `resume.tex` 216 (Typeform ~20%, 10%), 217 (70%), 218 (35%); `thryv-common-achievements.md` #22 (K6 <1%, p95 <500ms); AI section: `thryv-work.md` line 5, `claude-code-dev-workflow.md` §2–4; looking for: `linkedin-profile-draft.md` line 37 | 2026-11-26 | published | yes |
+| `/about/`, `profile.yaml`, `facts.json` | roles/dates/education/skills/certs: `resume.tex` 168–346; titles (CustomerDiscovery "Software Developer", DataSys "Volunteer Research Assistant") and Keap→Thryv: `linkedin-profile-draft.md` 43–88, 196–197; "how I work": `Ashutosh - Software Engineer III.md` 105–128, 325, 438–448, `thryv-work.md` 5, 59 | 2026-11-26 | published | yes |
 | `/projects/neurostore/` | `neurostore.md` | 2026-11-26 | published | yes |
 | `/projects/agent-dev-workflow/` | `claude-code-dev-workflow.md` (numbers: lines 9, 16, 18–20, 36, 42–45); user estimates 2026-11-26: over 100 tickets, ~30% shorter time to merge | 2026-11-26 | published | yes |
-| `/work/advisory-locks/` | `Ashutosh - Software Engineer III.md` (lines 7–43, 227–257); `thryv-common-achievements.md` #7 | 2026-11-26 | published | yes |
+| `/work/advisory-locks/` | `Ashutosh - Software Engineer III.md` (lines 7–43, 227–257); `thryv-common-achievements.md` #7; 35% and "transaction-scoped": `resume.tex` 218 | 2026-11-26 | published | yes |
 | `/work/cross-cloud-sqs-consumer/` | `recurly-subscription-events-sqs-consumer.md` (all) | 2026-11-26 | published | yes |
 | `/work/debugging-the-unreproducible/` | `Ashutosh - Software Engineer III.md` (lines 139–186, 261–297); `thryv-common-achievements.md` #3, #8 | 2026-11-26 | published | yes |

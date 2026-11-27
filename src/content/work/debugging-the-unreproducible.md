@@ -1,7 +1,7 @@
 ---
 title: Debugging the unreproducible
 summary: Two bugs with no easy repro. One needed a third-party provider to fail on demand; I forced it inside an integration test and traced it to transaction boundaries. The other failed exports across teams; I instrumented the HTTP client and found the cause in about an hour.
-themes: [reliability, integrity, integration]
+themes: [integrity, reliability, integration]
 weight: 5
 context: Solution Launchpad, Packaging Service (Thryv/Keap)
 stack: [Java, Micronaut, JPA transactions, HTTP client filters]

@@ -4,8 +4,8 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
-const ROOT = process.cwd();
-const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.astro']);
+const ROOT = process.argv[2] ? join(process.cwd(), process.argv[2]) : process.cwd();
+const SKIP_DIRS = new Set(['node_modules', '.git', '.astro', ...(process.argv[2] ? [] : ['dist'])]);
 const SKIP_FILES = new Set(['denylist.txt', 'denylist.local.txt', 'PLAN.md', 'package-lock.json', 'scripts/denylist.mjs']);
 const TEXT_EXT = /\.(md|mdx|astro|html|txt|json|ya?ml|mjs|js|ts|css|svg|tex|xml)$/i;
 
@@ -46,4 +46,4 @@ for (const [p, rel] of walk(ROOT)) {
   });
 }
 if (failures) { console.error(`\nDenylist check FAILED (${failures} hit(s)).`); process.exit(1); }
-console.log('Denylist check passed.');
+console.log(`Denylist check passed${process.argv[2] ? ` (${process.argv[2]})` : ''}.`);

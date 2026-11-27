@@ -1,6 +1,6 @@
 ---
 title: Per-tenant serialization with Postgres advisory locks
-summary: Parallel tasks for the same tenant risked row-level conflicts and data corruption in export and install workflows. I compared three locking approaches and chose Postgres advisory locks, which serialized work per tenant without changing the existing flows.
+summary: Parallel tasks for the same tenant risked row-level conflicts and data corruption in export and install workflows. I compared three locking approaches and chose transaction-scoped Postgres advisory locks, which cut install/export failures by 35% without changing the existing flows.
 themes: [platform, integrity, reliability]
 weight: 5
 context: Packaging Service, Solution Launchpad (Thryv/Keap)
@@ -27,7 +27,7 @@ I evaluated **three** distributed locking strategies:
 
 ## Decision
 
-I chose **Postgres advisory locks** to serialize work per tenant, for three reasons:
+I chose **transaction-scoped Postgres advisory locks** to serialize work per tenant, for three reasons:
 
 - They **avoided changes to the existing install and export flows**.
 - They **used infrastructure the service already had**, so there was nothing new to run.
@@ -41,6 +41,7 @@ Concurrency bugs rarely show up in ordinary tests. I designed **integration test
 
 ## Outcome
 
+- **35% fewer install/export failures.**
 - **Eliminated concurrent modifications for a tenant**, removing the race conditions in export and install workflows.
 - Changed **none** of the existing install and export flows, with no regressions.
 - Left a **reusable concurrency-control pattern** that other workflows in the service can apply.

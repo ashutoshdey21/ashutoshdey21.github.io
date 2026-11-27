@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { positioning, profile, personLd, SITE } from '../lib/data';
+const fmt = (d: string) => d === 'present' ? 'Present' : new Date(`${d}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'ProfilePage', url: `${SITE}/about/`, mainEntity: personLd() },
+];
+---
+<Base title="About | Ashutosh Dey" description={`About Ashutosh Dey: ${positioning.descriptor}.`} jsonld={ld} type="profile" mdTwin="/about.md">
+  <h1>About</h1>
+  <p>
+    I'm Ashutosh Dey, a backend engineer at Thryv. I joined Keap in July 2021, before Thryv acquired it, so I've
+    been there over 5 years; before that I worked at Cognizant, Tata Consultancy Services, CYR3CON and
+    CustomerDiscovery.co, and completed an MS in software engineering at Arizona State University. I build Java and Micronaut services on PostgreSQL,
+    running on GCP and AWS, and I work with Product, Analytics and SRE to ship well-tested code.
+  </p>
+
+  <h2>How I work</h2>
+  <ul>
+    <li><strong>Compare options before committing.</strong> For per-tenant concurrency I weighed three locking approaches before choosing PostgreSQL advisory locks (<a href="/work/advisory-locks/">case study</a>).</li>
+    <li><strong>Measure before fixing.</strong> When resources exported into Solution Launchpad were left broken, I built an admin endpoint that scanned for them and counted them by failure state. That showed a full migration wasn't needed.</li>
+    <li><strong>Make failures deterministic, then instrument.</strong> I reproduce in a test or a local instance first, and add instrumentation where the logs are silent (<a href="/work/debugging-the-unreproducible/">case study</a>).</li>
+    <li><strong>Assume the framework can fail silently.</strong> A missing bean registration would have sent every processed message to the dead-letter queue; I caught it before launch (<a href="/work/cross-cloud-sqs-consumer/">case study</a>).</li>
+    <li><strong>Leave it written down.</strong> Runbooks, a hotfix process, an API resource guide with C4 diagrams, and fixes to the engineering handbook when setup steps were missing.</li>
+    <li><strong>Use AI agents with guardrails.</strong> I use Claude Code daily, and I built a multi-agent ticket-to-PR workflow in which each agent only has the tools it needs (<a href="/projects/agent-dev-workflow/">design</a>).</li>
+  </ul>
+
+  <h2>What I'm looking for</h2>
+  <p>{positioning.looking_for}</p>
+  <p>The best way to reach me is <a href={profile.links.linkedin} rel="me">LinkedIn</a>. My code is on <a href={profile.links.github} rel="me">GitHub</a>.</p>
+
+  <h2>Experience</h2>
+  <ul class="timeline">
+    {profile.experience.map((e: any) => (
+      <li><span class="when">{fmt(e.start)} – {fmt(e.end)}</span><span><strong>{e.title}</strong>, {e.org}{e.note && <><br /><span class="muted">{e.note}</span></>}</span></li>
+    ))}
+  </ul>
+
+  <h2>Education</h2>
+  <ul class="timeline">
+    {profile.education.map((e: any) => <li><span class="when">{fmt(e.end)}</span><span><strong>{e.degree}</strong>, {e.org}</span></li>)}
+  </ul>
+
+  <h2>Skills</h2>
+  <dl class="skills">
+    {Object.entries(profile.skills).map(([k, v]) => <><dt>{k[0].toUpperCase() + k.slice(1)}</dt><dd>{(v as string[]).join(', ')}</dd></>)}
+  </dl>
+
+  <h2>Certifications</h2>
+  <ul>
+    {profile.certifications.map((c: any) => <li>{c.name}, {c.issuer} ({fmt(c.date)})</li>)}
+  </ul>
+</Base>
+<style>
+  .timeline { list-style:none; padding:0; }
+  .timeline li { display:grid; grid-template-columns:9.5rem 1fr; gap:1rem; padding:.45rem 0; border-top:1px solid var(--line); }
+  .when { color:var(--muted); font-size:.9rem; font-variant-numeric:tabular-nums; }
+  @media (max-width:520px) { .timeline li { grid-template-columns:1fr; gap:0; } }
+  .skills dt { font-weight:600; margin-top:.6rem; }
+  .skills dd { margin:0; }
+</style>

@@ -1,0 +1,28 @@
+# Facts about Ashutosh Dey. Sources: resume.tex and linkedin-profile-draft.md (user-confirmed titles).
+# No email, no phone, no work-authorization status. Ever.
+name: Ashutosh Dey
+jobTitle: Software Engineer II
+location: San Francisco / Redwood City, CA
+url: https://ashutoshdey21.github.io/
+links:
+  github: https://github.com/ashutoshdey21
+  linkedin: https://www.linkedin.com/in/ashutoshdey
+experience:
+  - { title: Software Engineer II, org: Thryv, start: 2021-07, end: present, note: "Joined Keap in July 2021; Keap was later acquired by Thryv. Remote, US." }
+  - { title: Software Developer, org: CustomerDiscovery.co, start: 2021-01, end: 2021-05 }
+  - { title: Software Engineer, org: "Cyber Reconnaissance, Inc. (CYR3CON)", start: 2020-06, end: 2021-05 }
+  - { title: Volunteer Research Assistant, org: "DataSys Lab, Arizona State University", start: 2020-04, end: 2020-07 }
+  - { title: Software Engineer, org: Tata Consultancy Services, start: 2019-02, end: 2019-07 }
+  - { title: Programmer Analyst, org: Cognizant Technology Solutions, start: 2015-09, end: 2019-02 }
+education:
+  - { degree: "Master of Science in Computer Software Engineering", org: Arizona State University, end: 2021-05 }
+  - { degree: "Bachelor of Technology in Computer Science & Engineering", org: SRM University, end: 2015-05 }
+skills:
+  languages: [Java, Python, JavaScript/TypeScript]
+  frameworks: [Micronaut, Spring Boot, Node.js, React]
+  data: [PostgreSQL, Redis, MongoDB, MySQL, DynamoDB]
+  cloud: [GCP (CloudSQL, Pub/Sub, Cloud Tasks, GKE), AWS (SQS, SNS, STS, Lambda, API Gateway, Cognito, S3, IAM)]
+  practices: [REST and GraphQL APIs, event-driven systems, Terraform, CI/CD, K6 load testing, AI-assisted development with Claude Code]
+certifications:
+  - { name: ChatGPT Prompt Engineering for Developers, issuer: DeepLearning.AI, date: 2025-03 }
+  - { name: Building Systems with the ChatGPT API, issuer: DeepLearning.AI, date: 2025-03 }
