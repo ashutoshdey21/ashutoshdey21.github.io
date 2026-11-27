@@ -12,6 +12,16 @@ Source paths are relative to the private `resume-work/data/` folder, except `res
 | `/work/advisory-locks/` | `Ashutosh - Software Engineer III.md` (lines 7–43, 227–257); `thryv-common-achievements.md` #7; 35% and "transaction-scoped": `resume.tex` 218 | 2026-11-26 | published | yes |
 | `/work/cross-cloud-sqs-consumer/` | `recurly-subscription-events-sqs-consumer.md` (all) | 2026-11-26 | published | yes |
 | `/work/debugging-the-unreproducible/` | `Ashutosh - Software Engineer III.md` (lines 139–186, 261–297); `thryv-common-achievements.md` #3, #8 | 2026-11-26 | published | yes |
+| `/work/cloudsql-migration/` | `Ashutosh - Software Engineer III.md` 384–426; `thryv-work.md` 41 (intg/stage/prod, machine user, Heroku decommission), 55 (Heroku URLs, CORS, identity URLs); `thryv-common-achievements.md` #1; "led" + 70%: `resume.tex` 217 | 2026-11-26 | published | yes |
+| `/work/measure-before-fixing/` | `Ashutosh - Software Engineer III.md` 90–135; `thryv-common-achievements.md` #10 | 2026-11-26 | published | yes |
+| `/work/authorization-surface/` | `thryv-work.md` 8–13; `thryv-common-achievements.md` #2, #13–15; `Ashutosh - Software Engineer III.md` 301–380 (Pub/Sub, listener fix), 518–560 (Terraform/SRE, hardcoded region) | 2026-11-26 | published | yes |
+| `/work/load-test-gates/` | `thryv-work.md` 34–35 (14 endpoint groups enumerated, <1%, p95 <500ms); `thryv-common-achievements.md` #22 | 2026-11-26 | published | yes |
+| `/work/tenant-settings-notifications/` | `Ashutosh - Software Engineer III.md` 564–601; `thryv-work.md` 23, 30–31; `thryv-common-achievements.md` #4, #21 | 2026-11-26 | published | yes |
+| `/notes/let-the-queue-count-retries/` | `recurly-subscription-events-sqs-consumer.md` §3, §5 (line 41), §6 (line 48) | 2026-11-26 | published | yes |
+| `/notes/five-agents-not-one/` | `claude-code-dev-workflow.md` §4 (lines 30–31) | 2026-11-26 | published | yes |
+| `/notes/terraform-plan-surprise/` | `Ashutosh - Software Engineer III.md` 518–560 | 2026-11-26 | published | yes |
+| `/notes/ci-build-image-moved/` | `Ashutosh - Software Engineer III.md` 190–223 | 2026-11-26 | published | yes |
+| `/resume/`, `resume.pdf` | `resume/resume.tex`, generated from `resume-work/resume.tex` minus email, phone, intern bullet and "Open to learn" line; titles per `linkedin-profile-draft.md` 197 | 2026-11-26 | published | yes |
 
 ## Verification log
 

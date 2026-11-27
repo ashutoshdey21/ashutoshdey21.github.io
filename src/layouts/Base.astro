@@ -5,7 +5,7 @@ const { title, description, jsonld = [], type = 'website', mdTwin } = Astro.prop
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const og = new URL('/og.png', Astro.site);
 const path = Astro.url.pathname;
-const nav = [['/work/', 'Work'], ['/projects/', 'Projects'], ['/about/', 'About']];
+const nav = [['/work/', 'Work'], ['/projects/', 'Projects'], ['/notes/', 'Notes'], ['/about/', 'About']];
 ---
 <!doctype html>
 <html lang="en">

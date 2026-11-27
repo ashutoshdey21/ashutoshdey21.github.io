@@ -1,0 +1,346 @@
+% ============================================================
+%  Ashutosh Dey — Resume (public version: no email or phone)
+%  Template: RenderCV (Jake's Resume style)
+%  Compiler: pdflatex (Overleaf-compatible)
+%  Last updated: 2026-09
+% ============================================================
+
+\documentclass[10pt]{article}
+
+% ── Packages ─────────────────────────────────────────────
+\usepackage[
+    a3paper,
+    ignoreheadfoot,
+    top=1.5 cm,
+    bottom=1.5 cm,
+    left=2 cm,
+    right=2 cm,
+    footskip=1.0 cm,
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 79, 144}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[
+    pdftitle={Ashutosh Dey's Resume},
+    pdfauthor={Ashutosh Dey},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+% Ensure PDF is ATS-parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+\fi
+
+% ── Layout settings ───────────────────────────────────────
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0cm}
+\makeatletter
+\let\ps@customFooterStyle\ps@plain
+\makeatother
+
+\titleformat{\section}{\needspace{3\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{0.25cm}{0.18cm}
+
+% ── Custom environments ───────────────────────────────────
+\renewcommand\labelitemi{$\circ$}
+
+\newenvironment{highlights}{
+    \begin{itemize}[leftmargin=15pt, topsep=1pt, itemsep=1pt]
+}{
+    \end{itemize}
+}
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{0.2 cm + 0.00001 cm}{0.2 cm + 0.00001 cm}
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+% Three-column layout: Role | Company | Date
+\newenvironment{threecolentry}[3]{
+    \onecolentry
+    \def\firstColumn{#1}
+    \def\secondColumn{#2}
+    \def\thirdColumn{#3}
+    \setcolumnwidth{6cm, 11.5cm, 5cm}
+    \begin{paracol}{3}
+    \firstColumn
+}{
+    \switchcolumn[1] \centering \secondColumn
+    \switchcolumn[2] \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.2}
+}{
+    \par\kern\topsep
+}
+
+\let\hrefWithoutArrow\href
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{#2}}
+
+% ============================================================
+\begin{document}
+
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    % ── HEADER ───────────────────────────────────────────────
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Ashutosh Dey}
+        \vspace{0.08 cm}
+
+        {\small Software Engineer | Applications | Data Integration | Cloud}
+
+        \vspace{0.2 cm}
+        \normalsize
+
+        \mbox{San Francisco / Redwood City, CA}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://ashutoshdey21.github.io/}{ashutoshdey21.github.io}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/ashutoshdey}{linkedin.com/in/ashutoshdey}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/ashutoshdey21}{github.com/ashutoshdey21}}%
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+    % ── PROFILE ──────────────────────────────────────────────
+    \section{Profile}
+        \begin{onecolentry}
+            \textbf{Java} software engineer building scalable backend services and data integrations -- \textbf{Micronaut}/\textbf{Spring Boot} and \textbf{Node.js} microservices, \textbf{REST}/\textbf{GraphQL} APIs, and event-driven workflows on \textbf{AWS}/\textbf{GCP} over \textbf{PostgreSQL}, \textbf{Redis}, \textbf{MongoDB}, and \textbf{DynamoDB}.
+
+            Partners with Product, Analytics, and SRE stakeholders in Agile teams to ship well-tested code that improves performance, reliability, and cost efficiency.
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+    % ── EDUCATION ────────────────────────────────────────────
+    \section{Education}
+
+        \begin{threecolentry}{
+            \raggedright\textbf{Arizona State University}
+            }{
+            \centering\textit{Master of Science in Computer Software Engineering}
+            }{
+            \raggedleft\textit{May 2021}
+            }
+        \end{threecolentry}
+
+        \vspace{0.10 cm}
+
+        \begin{threecolentry}{
+            \raggedright\textbf{SRM University}
+            }{
+            \centering\textit{Bachelor of Technology in Computer Science \& Engineering}
+            }{
+            \raggedleft\textit{May 2015}
+            }
+        \end{threecolentry}
+
+    % ── EXPERIENCE ───────────────────────────────────────────
+    \section{Experience}
+
+        % --- Thryv ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Software Engineer II}
+            }{
+            \centering\textit{\textbf{Thryv} -- Remote, US}
+            }{
+            \raggedleft\textit{July 2021 -- Present}
+            }
+        \end{threecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Built Typeform-Keap integration adopted by \textbf{$\sim$20\% of customers}, contributing to \textbf{10\%} customer growth.
+                \item Led the migration of the Play service database from Heroku Postgres to \textbf{GCP CloudSQL} and upgraded the Java/Micronaut BOM -- cut infrastructure cost by \textbf{70\%} while improving security posture and moving the service under SRE-managed support.
+                \item Reduced install/export failures by \textbf{35\%} via transaction-scoped \textbf{PostgreSQL advisory locks} coordinating shared resources under high concurrency.
+                \item Built a \textbf{Pub/Sub}-driven account-role-permission sync and fixed a misconfigured event listener, preventing a critical customer-facing defect that would have blocked user access.
+                \item Built BFF \textbf{GraphQL} resolvers to integrate multiple data sources and batch paginated API calls into single responses; reduced network round-trips by \textbf{$\sim$20\%} and improved p95 data-fetch latency.
+                \item Cut Tasks page load time from \textbf{8.6s} to \textbf{3.53s} by slimming API payloads and combining required fields.
+                \item Implemented token pagination enabling \textbf{100K}-deal lists and \textbf{$\sim$10x} scale improvements for list operations.
+                \item Built a shareable resource-ID endpoint for the Packaging Service; accelerated lookups by \textbf{50\%} via tuned queries/repositories.
+                \item Improved DX and onboarding time by \textbf{25\%} through Swagger docs and clear error contracts.
+                \item Built a multi-agent \textbf{Claude Code} pipeline (\texttt{/dev-workflow}) taking Jira tickets to PRs through five sub-agents with explicit tool allowlists, human confirmation at every phase, and a capped verify $\to$ fix loop; added a self-reflect agent that turns PR reviewer feedback into agent-instruction updates and persistent memory.
+                \item Collaborated with Product, Analytics, and go-to-market stakeholders to translate planning/reporting requirements into technical designs; delivered features in Agile sprints with clear acceptance criteria.
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.3 cm}
+
+        % --- CustomerDiscovery.co ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Software Developer}
+            }{
+            \centering\textit{CustomerDiscovery.co, Remote}
+            }{
+            \raggedleft\textit{Jan. 2021 -- May 2021}
+            }
+        \end{threecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Architected and \textbf{deployed} a \textbf{highly available web application} that \textbf{scales continuously} using AWS services like Lambda, API Gateway, and Amplify, saving \textbf{\$2,500/month} in operating costs.
+                \item \textbf{Developed resilient REST APIs} utilizing \textbf{Node.js} hosted on AWS Lambda and \textbf{integrated} the frontend built with \textbf{HTML}, \textbf{CSS}, \textbf{JavaScript}, and \textbf{React.js}, ensuring \textbf{performance enhancements of up to 50\%}.
+                \item \textbf{Implemented} a \textbf{robust authentication and authorization system} using AWS Cognito, \textbf{reducing infrastructure and maintenance costs by 90\%}.
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.3 cm}
+
+        % --- CYR3CON ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Software Engineer}
+            }{
+            \centering\textit{Cyber Reconnaissance, Inc. (CYR3CON), Tempe, AZ}
+            }{
+            \raggedleft\textit{June 2020 -- May 2021}
+            }
+        \end{threecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Improved execution time of the Crawling Module by \textbf{20\%} through the development of efficient filters.
+                \item Developed sustainable and extensible Python scripts to scrape websites and dynamic content on the Dark Web, efficiently solving CAPTCHAs using Selenium and Beautiful Soup, increasing throughput by \textbf{35\%}.
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.3 cm}
+
+        % --- DataSys Lab ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Volunteer Research Assistant}
+            }{
+            \centering\textit{DataSys Lab, Arizona State University, Tempe, AZ}
+            }{
+            \raggedleft\textit{April 2020 -- July 2020}
+            }
+        \end{threecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Collaborated on developing a \textbf{Geospatial Querying} API Library to support querying on data streams in a \textbf{distributed computing environment} using \textbf{Apache Kafka's Streams API}, reducing query response time by \textbf{200 milliseconds}.
+                \item Conducted statistical analysis to compare \textbf{performance and time} by varying cluster and partition sizes for a geospatial data processing application using \textbf{Apache Spark's SQL}.
+                \item Explored visualization \textbf{techniques} using \textbf{Google Maps API} in JavaScript for real-time data stream \textbf{visualization}.
+                \item Utilized Spark's SQL API in Scala and Hadoop File System on Apache Spark's cluster computing framework to \textbf{achieve 30\% faster range and distance queries} on point and rectangle coordinate sets.
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.5 cm}
+
+        % --- TCS ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Software Engineer}
+            }{
+            \centering\textit{Tata Consultancy Services, Bangalore, India}
+            }{
+            \raggedleft\textit{Feb. 2019 -- July 2019}
+            }
+        \end{threecolentry}
+
+        \vspace{0.5 cm}
+
+        % --- Cognizant ---
+        \begin{threecolentry}{
+            \raggedright\textbf{Programmer Analyst}
+            }{
+            \centering\textit{Cognizant Technology Solutions, Bangalore, India}
+            }{
+            \raggedleft\textit{Sep. 2015 -- Feb. 2019}
+            }
+        \end{threecolentry}
+
+    % ── PROJECTS ─────────────────────────────────────────────
+
+    % ── SKILLS ───────────────────────────────────────────────
+    \section{Technical Skills}
+
+        \begin{onecolentry}
+            \textbf{Application Development:} Java, Python, JavaScript/TypeScript, Node.js, Micronaut, Spring Boot, React\\
+            \textbf{Data \& Integration:} REST/GraphQL APIs, event-driven systems, queues (GCP Cloud Tasks), batch/stream processing, JSON/CSV, pagination at scale\\
+            \textbf{Cloud \& Datastores:} AWS (Lambda, API Gateway, Cognito, S3, IAM, EC2, Amplify, Secrets Manager), GCP (CloudSQL, Cloud Tasks, Pub/Sub); PostgreSQL, Redis, MongoDB, MySQL, DynamoDB\\
+            \textbf{Ways of Working:} Agile/Scrum, Jira, CI/CD, code reviews, observability/metrics, incident troubleshooting
+        \end{onecolentry}
+
+    % ── CERTIFICATIONS ───────────────────────────────────────
+    \section{Certifications}
+
+        \textbf{ChatGPT Prompt Engineering for Developers} \hfill \textit{DeepLearning.AI (in collaboration with OpenAI)}\\
+        Issued: March 2025 \hfill \hrefWithoutArrow{https://learn.deeplearning.ai/accomplishments/14072d88-ddc5-4d95-a3a3-dd9af170762a?usp=sharing}{\textit{Credential Link}}
+        \begin{itemize}[leftmargin=*, topsep=2pt, itemsep=2pt]
+            \item Mastered techniques in prompt design, system role configuration, zero-shot/few-shot prompting, and structured outputs using OpenAI's GPT models.
+        \end{itemize}
+
+        \vspace{0.2cm}
+
+        \textbf{Building Systems with the ChatGPT API} \hfill \textit{DeepLearning.AI (in collaboration with OpenAI)}\\
+        Issued: March 2025 \hfill \hrefWithoutArrow{https://learn.deeplearning.ai/accomplishments/7e14d43c-9777-4220-8482-3f06bde4be5c?usp=sharing}{\textit{Credential Link}}
+        \begin{itemize}[leftmargin=*, topsep=2pt, itemsep=2pt]
+            \item Built LLM-powered applications using function calling, tool use, prompt chaining, retrieval-augmented generation (RAG), and output validation patterns.
+        \end{itemize}
+
+\end{document}

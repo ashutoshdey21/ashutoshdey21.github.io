@@ -47,4 +47,15 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { projects, work };
+const notes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    themes: z.array(lens).min(1),
+    weight: z.number().int().min(1).max(5),
+    related: z.string().optional(),
+  }),
+});
+
+export const collections = { projects, work, notes };

@@ -4,7 +4,7 @@ import { LENSES } from '../content.config';
 const ym = (d: string) => (d === 'present' ? 'present' : d);
 const lensList = (t: (keyof typeof LENSES)[]) => t.map((x) => LENSES[x]).join(', ');
 
-export function entryMd(kind: 'work' | 'projects', e: any) {
+export function entryMd(kind: 'work' | 'projects' | 'notes', e: any) {
   const d = e.data;
   const meta = [
     `Author: Ashutosh Dey (${SITE}/)`,

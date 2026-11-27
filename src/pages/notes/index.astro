@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allContent } from '../../lib/data';
+import { LENSES } from '../../content.config';
+const { notes } = await allContent();
+---
+<Base title="Notes | Ashutosh Dey" description="Short engineering notes by Ashutosh Dey, software engineer: one decision or lesson each.">
+  <div class="prose">
+    <h1>Notes</h1>
+    <p class="muted intro">Short and specific: one decision or lesson each, taken from real work.</p>
+    <ul class="notes">
+      {notes.map((n) => (
+        <li>
+          <p class="lens">{LENSES[n.data.themes[0] as keyof typeof LENSES]}</p>
+          <h2><a href={`/notes/${n.id}/`}>{n.data.title}</a></h2>
+          <p class="muted">{n.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+<style>
+  .intro { margin:-.4rem 0 1.5rem; font-size:1.05rem; }
+  .notes { list-style:none; padding:0; margin:0; }
+  .notes li { padding:1.1rem 0; border-top:1px solid var(--line); }
+  .notes h2 { font-size:1.15rem; margin:.15rem 0 .3rem; }
+  .notes h2 a { color:var(--fg); text-decoration:none; }
+  .notes h2 a:hover { color:var(--accent); }
+  .notes p { margin:0; }
+  .lens { font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+</style>

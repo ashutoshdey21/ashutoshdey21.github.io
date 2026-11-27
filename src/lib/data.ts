@@ -12,7 +12,8 @@ export const SITE = 'https://ashutoshdey21.github.io';
 export async function allContent() {
   const work = (await getCollection('work')).sort((a, b) => b.data.weight - a.data.weight);
   const projects = (await getCollection('projects')).sort((a, b) => b.data.weight - a.data.weight);
-  return { work, projects };
+  const notes = (await getCollection('notes')).sort((a, b) => b.data.weight - a.data.weight);
+  return { work, projects, notes };
 }
 
 export const lensLabel = (t: keyof typeof LENSES) => LENSES[t];

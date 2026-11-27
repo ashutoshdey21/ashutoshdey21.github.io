@@ -2,12 +2,12 @@ import type { APIRoute } from 'astro';
 import { positioning, allContent, SITE, profile } from '../lib/data';
 
 export const GET: APIRoute = async () => {
-  const { work, projects } = await allContent();
+  const { work, projects, notes } = await allContent();
   const body = `# Ashutosh Dey
 
 > ${positioning.descriptor}. ${positioning.headline}
 
-This is the personal site of Ashutosh Dey, ${profile.jobTitle} at ${profile.experience[0].org}. Home, about, every case study and every project has a Markdown twin (the page URL with .md instead of the trailing slash). Full content in one file: ${SITE}/llms-full.txt. Machine-readable profile: ${SITE}/facts.json.
+This is the personal site of Ashutosh Dey, ${profile.jobTitle} at ${profile.experience[0].org}. Home, about, every case study, project and note has a Markdown twin (the page URL with .md instead of the trailing slash). Full content in one file: ${SITE}/llms-full.txt. Machine-readable profile: ${SITE}/facts.json.
 
 ## Profile
 
@@ -21,6 +21,10 @@ ${work.map((w) => `- [${w.data.title}](${SITE}/work/${w.id}.md): ${w.data.summar
 ## Projects
 
 ${projects.map((p) => `- [${p.data.title}](${SITE}/projects/${p.id}.md): ${p.data.summary}`).join('\n')}
+
+## Notes
+
+${notes.map((n) => `- [${n.data.title}](${SITE}/notes/${n.id}.md): ${n.data.summary}`).join('\n')}
 
 ## Identity
 

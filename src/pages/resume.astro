@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { positioning, profile } from '../lib/data';
+---
+<Base title="Résumé | Ashutosh Dey" description={`Résumé of Ashutosh Dey: ${positioning.descriptor}.`}>
+  <div class="prose">
+    <h1>Résumé</h1>
+    <p class="lede">{profile.jobTitle} at {profile.experience[0].org}. Java, PostgreSQL, AWS/GCP. {profile.location}.</p>
+    <p class="cta">
+      <a class="btn" href="/resume.pdf" download="Ashutosh-Dey-Resume.pdf">Download PDF</a>
+      <a class="btn ghost" href="/resume.pdf">Open in browser</a>
+    </p>
+    <p class="muted">Prefer the long form? The <a href="/work/">case studies</a> go deeper than a résumé can, and the <a href="/about/">about page</a> lists every role. To get in touch, <a href={profile.links.linkedin} rel="me">message me on LinkedIn</a>.</p>
+  </div>
+</Base>
+<style>
+  .lede { font-size:1.1rem; }
+  .cta { display:flex; flex-wrap:wrap; gap:.65rem; margin:1.5rem 0; }
+</style>

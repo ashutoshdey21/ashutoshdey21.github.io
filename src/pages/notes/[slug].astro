@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { LENSES } from '../../content.config';
+import { authorRef } from '../../lib/data';
+export async function getStaticPaths() {
+  return (await getCollection('notes')).map((n) => ({ params: { slug: n.id }, props: { n } }));
+}
+const { n } = Astro.props;
+const { Content } = await render(n);
+const url = new URL(`/notes/${n.id}/`, Astro.site).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: n.data.title,
+  description: n.data.summary,
+  author: authorRef,
+  keywords: n.data.themes.map((t) => LENSES[t]).join(', '),
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  url,
+  mainEntityOfPage: url,
+};
+---
+<Base title={`${n.data.title} | Ashutosh Dey`} description={n.data.summary} type="article" mdTwin={`/notes/${n.id}.md`} jsonld={[ld]}>
+  <article>
+    <p class="crumbs"><a href="/notes/">All notes</a></p>
+    <h1>{n.data.title}</h1>
+    <p class="lede">{n.data.summary}</p>
+    <Content />
+    {n.data.related && <p class="related"><a href={n.data.related}>Read the full story →</a></p>}
+  </article>
+</Base>
+<style>
+  h1 { font-size:clamp(1.7rem, 5vw, 2.2rem); margin-top:1rem; }
+  .lede { font-size:1.1rem; color:var(--muted); }
+  .related { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--line); font-weight:600; }
+</style>

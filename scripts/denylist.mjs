@@ -3,6 +3,7 @@
 // and denylist.local.txt (gitignored, for internal names that must never appear in the repo).
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = process.argv[2] ? join(process.cwd(), process.argv[2]) : process.cwd();
 const SKIP_DIRS = new Set(['node_modules', '.git', '.astro', ...(process.argv[2] ? [] : ['dist'])]);
@@ -28,13 +29,18 @@ function* walk(dir) {
     const rel = relative(ROOT, p);
     if (SKIP_DIRS.has(name) || SKIP_FILES.has(rel)) continue;
     if (statSync(p).isDirectory()) yield* walk(p);
-    else if (TEXT_EXT.test(name)) yield [p, rel];
+    else if (TEXT_EXT.test(name) || /\.pdf$/i.test(name)) yield [p, rel];
   }
 }
 
 let failures = 0;
 for (const [p, rel] of walk(ROOT)) {
-  const lines = readFileSync(p, 'utf8').split('\n');
+  let text;
+  if (/\.pdf$/i.test(p)) {
+    try { text = execFileSync('pdftotext', ['-layout', p, '-'], { encoding: 'utf8' }); }
+    catch { console.error(`${rel}: cannot read PDF (install pdftotext / poppler-utils)`); failures++; continue; }
+  } else text = readFileSync(p, 'utf8');
+  const lines = text.split('\n');
   lines.forEach((line, i) => {
     for (const [re, label] of patterns) {
       if (re.test(line)) { console.error(`${rel}:${i + 1}: ${label}`); failures++; }
