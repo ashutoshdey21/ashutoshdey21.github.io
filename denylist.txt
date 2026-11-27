@@ -1,0 +1,2 @@
+# One blocked term per line (case-insensitive, substring match). Generic terms only.
+# Internal repo/flag names go in denylist.local.txt (gitignored).

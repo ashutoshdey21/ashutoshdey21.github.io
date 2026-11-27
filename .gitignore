@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+# Private working files: contain internal identifiers, never commit
+PLAN.md
+denylist.local.txt

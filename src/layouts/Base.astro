@@ -1,0 +1,44 @@
+---
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Ashutosh Dey',
+  jobTitle: 'Backend engineer',
+  url: 'https://ashutoshdey21.github.io/',
+  sameAs: ['https://github.com/ashutoshdey21', 'https://www.linkedin.com/in/ashutoshdey'],
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="me" href="https://github.com/ashutoshdey21" />
+    <link rel="me" href="https://www.linkedin.com/in/ashutoshdey" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="color-scheme" content="light dark" />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    <style is:global>
+      :root { --bg:#fff; --fg:#1a1a1a; --muted:#5b5b5b; --link:#0b5cad; }
+      @media (prefers-color-scheme: dark) { :root { --bg:#121212; --fg:#ececec; --muted:#a0a0a0; --link:#7db7ff; } }
+      body { margin:0; background:var(--bg); color:var(--fg); font:18px/1.6 system-ui,sans-serif; }
+      main, footer { max-width:42rem; margin:0 auto; padding:2rem 1rem; }
+      a { color:var(--link); } .muted { color:var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main><slot /></main>
+    <footer class="muted">
+      <small>Site prose and case studies: CC BY 4.0. Code samples: MIT.</small>
+    </footer>
+  </body>
+</html>
