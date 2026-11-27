@@ -17,6 +17,6 @@ jobs:
         with:
           args: >-
             --no-progress --max-retries 3 --accept 200,206,429 --root-dir ${{ github.workspace }}/dist
-            --exclude 'linkedin\.com' --exclude '^https://ashutoshdey21\.github\.io'
+            --exclude 'linkedin\.com' --exclude '/dist/neurostore' --exclude '^https://ashutoshdey21\.github\.io'
             'dist/**/*.html'
           fail: true
