@@ -5,6 +5,17 @@ themes: [integration, reliability]
 weight: 5
 context: Coaching Portal service (Thryv/Keap)
 stack: [Java 21, Micronaut, AWS SQS, AWS SNS, AWS STS, GCP Workload Identity, JUnit 5, Mockito]
+short: Cross-cloud auth with zero static keys
+status: Design write-up · not yet live
+hook: Connected a GKE service to AWS SQS with no stored credentials, and caught a silent bug that would have sent every processed message to the dead-letter queue.
+stats:
+  - { value: "0", label: "static AWS keys" }
+  - { value: "15", label: "commits, sole author" }
+  - { value: "~850", label: "lines of tests across 6 classes" }
+tldr:
+  - "**Auth:** GKE Workload Identity to a Google ID token to AWS STS, with a fresh token on every credential refresh."
+  - "**Correctness:** per-message acknowledgement instead of the library's batch default; explicit retryable vs. permanent failures."
+  - "**Pre-launch catch:** a missing bean registration silently skipped acknowledgements."
 ---
 
 **Status: not live in production.** The consumer is built and unit-tested but not yet enabled in any environment, so there are no production metrics. This is a design write-up.

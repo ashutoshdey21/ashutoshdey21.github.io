@@ -1,11 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import WorkList from '../../components/WorkList.astro';
-import { getCollection } from 'astro:content';
-const items = (await getCollection('work')).sort((a, b) => b.data.weight - a.data.weight);
+import { allContent } from '../../lib/data';
+const { work } = await allContent();
 ---
 <Base title="Work | Ashutosh Dey" description="Case studies by Ashutosh Dey, backend engineer: decisions and trade-offs in concurrency, cross-cloud integration and debugging.">
-    <h1>Work</h1>
-  <p>Case studies. Each one covers the problem, the constraints, the options, the decision and the outcome.</p>
-  <WorkList items={items} />
+  <h1>Work</h1>
+  <p class="muted intro">Decisions and trade-offs from production backend work. Each one starts with the short version.</p>
+  <WorkList items={work} />
 </Base>
+<style>.intro { margin:-.4rem 0 1.5rem; font-size:1.05rem; }</style>

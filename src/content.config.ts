@@ -11,6 +11,15 @@ export const LENSES = {
 
 const lens = z.enum(Object.keys(LENSES) as [keyof typeof LENSES, ...(keyof typeof LENSES)[]]);
 
+const stat = z.object({ value: z.string(), label: z.string() });
+const teaser = {
+  short: z.string().optional(),
+  hook: z.string(),
+  stats: z.array(stat).max(3).default([]),
+  tldr: z.array(z.string()).max(4).default([]),
+  status: z.string().optional(),
+};
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
@@ -21,6 +30,7 @@ const projects = defineCollection({
     repo: z.string().url().optional(),
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
     language: z.string().optional(),
+    ...teaser,
   }),
 });
 
@@ -33,6 +43,7 @@ const work = defineCollection({
     weight: z.number().int().min(1).max(5),
     context: z.string(),
     stack: z.array(z.string()).default([]),
+    ...teaser,
   }),
 });
 

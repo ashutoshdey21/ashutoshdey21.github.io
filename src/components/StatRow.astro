@@ -1,0 +1,24 @@
+---
+interface Props { stats: { value: string; label: string; sub?: string }[]; size?: 'lg' | 'md' }
+const { stats, size = 'md' } = Astro.props;
+---
+{stats.length > 0 && (
+  <ul class:list={['stats', size]} style={`--n:${stats.length}`}>
+    {stats.map((s) => (
+      <li>
+        <span class="v">{s.value}</span>
+        <span class="l">{s.label}</span>
+        {s.sub && <span class="s">{s.sub}</span>}
+      </li>
+    ))}
+  </ul>
+)}
+<style>
+  .stats { list-style:none; padding:0; margin:1.5rem 0; display:grid; grid-template-columns:repeat(var(--n), 1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .stats li { background:var(--card); padding:1rem 1.1rem; display:flex; flex-direction:column; gap:.15rem; }
+  .v { font-size:1.65rem; font-weight:750; letter-spacing:-.02em; line-height:1.1; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .lg .v { font-size:clamp(1.8rem, 5vw, 2.3rem); }
+  .l { font-size:.88rem; line-height:1.35; color:var(--fg); }
+  @media (max-width:560px) { .stats li { padding:.75rem .7rem; } .v { font-size:1.3rem; } .l { font-size:.76rem; } }
+  .s { font-size:.78rem; line-height:1.35; color:var(--muted); }
+</style>

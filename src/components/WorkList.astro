@@ -1,4 +1,5 @@
 ---
+import Card from './Card.astro';
 import { LENSES } from '../content.config';
 interface Props { items: any[]; active?: string }
 const { items, active } = Astro.props;
@@ -9,22 +10,12 @@ const { items, active } = Astro.props;
     <a href={`/work/lens/${slug}/`} aria-current={active === slug ? 'page' : undefined}>{label}</a>
   ))}
 </nav>
-<ul class="cards">
-  {items.map((w) => (
-    <li>
-      <h2><a href={`/work/${w.id}/`}>{w.data.title}</a></h2>
-      <p class="muted">{w.data.context}</p>
-      <p>{w.data.summary}</p>
-      <p class="tags">{w.data.themes.map((t: keyof typeof LENSES) => <a href={`/work/lens/${t}/`}>{LENSES[t]}</a>)}</p>
-    </li>
-  ))}
-</ul>
+<div class="grid">
+  {items.map((w) => <Card href={`/work/${w.id}/`} data={w.data} />)}
+</div>
 <style>
-  .chips, .tags { display:flex; flex-wrap:wrap; gap:.4rem; }
-  .chips a, .tags a { font-size:.85rem; padding:.15rem .6rem; border:1px solid currentColor; border-radius:999px; text-decoration:none; }
-  .chips a[aria-current="page"] { background:var(--fg); color:var(--bg); }
-  .cards { list-style:none; padding:0; }
-  .cards li { margin:2rem 0; }
-  .cards h2 { font-size:1.2rem; margin:0; }
-  .cards p { margin:.3rem 0; }
+  .chips { display:flex; flex-wrap:wrap; gap:.45rem; margin:0 0 1.5rem; }
+  .chips a { font-size:.85rem; font-weight:500; padding:.32rem .8rem; border:1px solid var(--line); border-radius:999px; text-decoration:none; color:var(--muted); background:var(--card); }
+  .chips a:hover { color:var(--fg); border-color:var(--fg); }
+  .chips a[aria-current="page"] { background:var(--fg); border-color:var(--fg); color:var(--bg); }
 </style>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import EntryPage from '../../components/EntryPage.astro';
 import { getCollection, render } from 'astro:content';
 import { authorRef } from '../../lib/data';
 export async function getStaticPaths() {
@@ -20,9 +21,7 @@ const ld = {
 ---
 <Base title={`${p.data.title} | Ashutosh Dey`} description={p.data.summary} type="article" mdTwin={`/projects/${p.id}.md`}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(ld)} />
-  <p class="crumbs"><a href="/projects/">Projects</a></p>
-  <h1>{p.data.title}</h1>
-  <p class="muted">{p.data.summary}</p>
-  {p.data.links.length > 0 && <p>{p.data.links.map((l, i) => <>{i > 0 && ' · '}<a href={l.href}>{l.label}</a></>)}</p>}
-  <Content />
+  <EntryPage data={p.data} section={{ href: '/projects/', label: 'All projects' }} links={p.data.links} readLabel="Read the full design">
+    <Content />
+  </EntryPage>
 </Base>

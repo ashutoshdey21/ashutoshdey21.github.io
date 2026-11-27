@@ -1,0 +1,53 @@
+---
+import StatRow from './StatRow.astro';
+import { LENSES } from '../content.config';
+import { inline } from '../lib/inline';
+interface Props { data: any; section: { href: string; label: string }; meta?: string; links?: { label: string; href: string }[]; readLabel: string }
+const { data, section, meta, links = [], readLabel } = Astro.props;
+---
+<article class="entry">
+  <p class="crumbs"><a href={section.href}>{section.label}</a></p>
+  <p class="tags">
+    {data.themes.map((t: keyof typeof LENSES) => <a href={`/work/lens/${t}/`}>{LENSES[t]}</a>)}
+    {data.status && <span class="badge">{data.status}</span>}
+  </p>
+  <h1>{data.title}</h1>
+  <p class="lede">{data.hook}</p>
+  <StatRow stats={data.stats} />
+  {data.tldr.length > 0 && (
+    <section class="tldr" aria-label="In short">
+      <h2>In short</h2>
+      <ul>{data.tldr.map((t: string) => <li set:html={inline(t)} />)}</ul>
+    </section>
+  )}
+  {links.length > 0 && <p class="links">{links.map((l) => <a class="btn ghost" href={l.href}>{l.label}</a>)}</p>}
+  <details class="story">
+    <summary><span>{readLabel}</span></summary>
+    <div class="body">
+      {meta && <p class="meta">{meta}</p>}
+      <slot />
+    </div>
+  </details>
+</article>
+<style>
+  .tags { display:flex; flex-wrap:wrap; gap:.4rem; margin:1rem 0 .25rem; }
+  .tags a, .badge { font-size:.75rem; padding:.15rem .6rem; border-radius:999px; text-decoration:none; }
+  .tags a { color:var(--muted); border:1px solid var(--line); }
+  .tags a:hover { color:var(--fg); border-color:var(--fg); }
+  .badge { background:var(--warn-bg); color:var(--warn-fg); font-weight:600; }
+  h1 { font-size:clamp(1.7rem, 5vw, 2.35rem); margin:.5rem 0 .75rem; }
+  .lede { font-size:1.12rem; color:var(--muted); margin:0; }
+  .tldr { background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:var(--radius); padding:.9rem 1.2rem .6rem; }
+  .tldr h2 { font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 .4rem; }
+  .tldr ul { margin:0; padding-left:1.1rem; }
+  .tldr li { margin:.35rem 0; }
+  .links { display:flex; flex-wrap:wrap; gap:.6rem; margin:1.25rem 0 0; }
+  .story { margin-top:1.75rem; border-top:1px solid var(--line); }
+  .story summary { cursor:pointer; list-style:none; padding:1rem 0; font-weight:650; color:var(--accent); display:flex; align-items:center; gap:.5rem; }
+  .story summary::-webkit-details-marker { display:none; }
+  .story summary::before { content:'+'; display:inline-grid; place-items:center; width:1.5rem; height:1.5rem; border-radius:50%; border:1.5px solid currentColor; font-weight:700; line-height:1; }
+  .story[open] summary::before { content:'−'; }
+  .story[open] summary span::after { content:' (collapse)'; font-weight:400; color:var(--muted); }
+  .meta { font-size:.88rem; color:var(--muted); }
+  .body :global(h2:first-of-type) { margin-top:1rem; }
+</style>

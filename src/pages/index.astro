@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
 import { positioning, profile, allContent, personLd, SITE } from '../lib/data';
-import { LENSES } from '../content.config';
-const { work } = await allContent();
+const { work, projects } = await allContent();
 const featured = positioning.featured.map((id: string) => work.find((w) => w.id === id)).filter(Boolean);
+const h = positioning.hero;
 const ld = [
   personLd(),
   { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Ashutosh Dey', url: `${SITE}/`, author: { '@id': `${SITE}/#person` } },
@@ -11,60 +12,59 @@ const ld = [
 ---
 <Base title="Ashutosh Dey · Backend engineer" description={`${positioning.descriptor}. ${positioning.headline}`} jsonld={ld} type="profile" mdTwin="/index.md">
   <section class="hero">
-    <p class="kicker">Ashutosh Dey · {profile.jobTitle} at {profile.experience[0].org} · {profile.location}</p>
-    <h1>{positioning.headline}</h1>
-    <p class="lede">{positioning.throughline}</p>
-    <p class="links">
-      <a href="/work/">Read the case studies</a> ·
-      <a href={profile.links.github} rel="me">GitHub</a> ·
-      <a href={profile.links.linkedin} rel="me">LinkedIn</a>
+    <p class="kicker">{h.kicker}</p>
+    <h1>{h.lead} <em>{h.em}</em> {h.tail}</h1>
+    <p class="meta">{h.meta}</p>
+    <p class="cta">
+      <a class="btn" href="/work/">See my work</a>
+      <a class="btn ghost" href={profile.links.linkedin} rel="me">LinkedIn</a>
+      <a class="btn ghost" href={profile.links.github} rel="me">GitHub</a>
     </p>
   </section>
 
-  <section aria-labelledby="results">
-    <h2 id="results">Selected results</h2>
+  <section aria-label="Selected results">
     <ul class="results">
-      {positioning.results.map((r: any) => <li><strong>{r.value}</strong><span>{r.label}</span></li>)}
+      {positioning.results.map((r: any) => {
+        const inner = <><span class="v">{r.value}</span><span class="l">{r.label}</span><span class="s">{r.sub}</span></>;
+        return <li>{r.href ? <a href={r.href}>{inner}</a> : <div>{inner}</div>}</li>;
+      })}
     </ul>
   </section>
 
   <section aria-labelledby="featured">
-    <h2 id="featured">Featured work</h2>
-    <ol class="featured">
-      {featured.map((w: any) => (
-        <li>
-          <p class="lens">{LENSES[w.data.themes[0] as keyof typeof LENSES]}</p>
-          <h3><a href={`/work/${w.id}/`}>{w.data.title}</a></h3>
-          <p>{w.data.summary}</p>
-        </li>
-      ))}
-    </ol>
-    <p><a href="/work/">All case studies →</a></p>
+    <div class="section-head">
+      <h2 id="featured">Featured work</h2>
+      <a href="/work/">All case studies →</a>
+    </div>
+    <div class="grid">
+      {featured.map((w: any) => <Card href={`/work/${w.id}/`} data={w.data} />)}
+    </div>
   </section>
 
-  <section aria-labelledby="ai">
-    <h2 id="ai">{positioning.ai.heading}</h2>
-    <p>{positioning.ai.body}</p>
-    <p><a href={positioning.ai.link}>How the workflow is designed →</a></p>
-  </section>
-
-  <section aria-labelledby="code">
-    <h2 id="code">Open source</h2>
-    <p><a href="/projects/neurostore/">neurostore</a>: a small Python library for multi-channel time-series recordings with write-once files, SHA-256 checks on every read and a transactional audit log. Synthetic data only.</p>
+  <section aria-labelledby="beyond">
+    <div class="section-head">
+      <h2 id="beyond">Also building</h2>
+      <a href="/projects/">All projects →</a>
+    </div>
+    <div class="grid two">
+      {projects.map((p) => <Card href={`/projects/${p.id}/`} data={p.data} />)}
+    </div>
   </section>
 </Base>
 <style>
-  .hero { padding-bottom:.5rem; }
-  .kicker { color:var(--muted); font-size:.92rem; margin:0; }
-  .hero h1 { font-size:clamp(1.75rem, 5vw, 2.5rem); margin:.6rem 0 1rem; }
-  .lede { font-size:1.08rem; }
-  .results { list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr)); gap:.75rem; }
-  .results li { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; display:flex; flex-direction:column; gap:.2rem; }
-  .results strong { font-size:1.5rem; color:var(--accent); line-height:1.2; }
-  .results span { font-size:.92rem; color:var(--muted); line-height:1.45; }
-  .featured { list-style:none; padding:0; }
-  .featured li { border-top:1px solid var(--line); padding:1rem 0 .4rem; }
-  .featured h3 { margin:.1rem 0 .3rem; }
-  .featured p { margin:.2rem 0; }
-  .lens { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .hero { padding:2.5rem 0 1rem; max-width:52rem; }
+  .kicker { margin:0 0 .9rem; font-weight:600; color:var(--accent); font-size:1rem; }
+  .hero h1 { font-size:clamp(2rem, 6vw, 3.3rem); line-height:1.08; letter-spacing:-.035em; font-weight:780; margin:0 0 1.1rem; text-wrap:balance; }
+  .hero em { font-style:normal; background:linear-gradient(100deg, var(--accent), #b44cd8); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .meta { color:var(--muted); margin:0 0 1.6rem; font-size:1rem; }
+  .cta { display:flex; flex-wrap:wrap; gap:.65rem; margin:0; }
+  .results { list-style:none; margin:2.75rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(13rem, 1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .results li { background:var(--card); }
+  .results a, .results div { display:flex; flex-direction:column; gap:.2rem; padding:1.2rem 1.25rem; height:100%; color:inherit; text-decoration:none; }
+  .results a:hover { background:var(--accent-soft); }
+  .v { font-size:clamp(1.9rem, 5vw, 2.4rem); font-weight:780; letter-spacing:-.03em; line-height:1.05; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .l { font-weight:600; font-size:.95rem; line-height:1.35; }
+  .s { font-size:.8rem; color:var(--muted); line-height:1.4; }
+  @media (max-width:640px) { .results { grid-template-columns:1fr 1fr; } .results a, .results div { padding:1rem; } .s { display:none; } }
+  .grid.two { grid-template-columns:repeat(auto-fill, minmax(17.5rem, 1fr)); }
 </style>

@@ -5,6 +5,16 @@ themes: [integrity, reliability, integration]
 weight: 5
 context: Solution Launchpad, Packaging Service (Thryv/Keap)
 stack: [Java, Micronaut, JPA transactions, HTTP client filters]
+short: Debugging the unreproducible
+hook: Forced a third-party failure inside a test, and traced a cross-team export failure to its root cause in about an hour.
+stats:
+  - { value: "~1 hr", label: "to root cause, in another team's service" }
+  - { value: "3", label: "providers isolated with custom HTTP instrumentation" }
+  - { value: "1 week", label: "failing service held off the release train" }
+tldr:
+  - "**Duplicate resources:** simulated the provider failure in an integration test, traced it through `@Transactional` boundaries, fixed it."
+  - "**Failing exports:** an `HttpClientFilter` showed which of three providers failed: an auth error in another team's service."
+  - "**Method:** make the failure deterministic first, then instrument."
 ---
 
 Both bugs had the same shape: the symptom showed up in one place, the cause lived somewhere you could not easily reach, and guessing was expensive. The approach in both was to **make the failure deterministic first, then instrument**.

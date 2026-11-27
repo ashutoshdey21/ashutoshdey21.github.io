@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/inter/wght.css';
 interface Props { title: string; description: string; jsonld?: object[]; type?: 'website' | 'article' | 'profile'; mdTwin?: string }
 const { title, description, jsonld = [], type = 'website', mdTwin } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -35,32 +36,59 @@ const nav = [['/work/', 'Work'], ['/projects/', 'Projects'], ['/about/', 'About'
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1013" media="(prefers-color-scheme: dark)" />
     {jsonld.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
     <slot name="head" />
     <style is:global>
-      :root { --bg:#fbfaf8; --fg:#1b1b1b; --muted:#5d5d5d; --line:#e3e0da; --link:#0b57a4; --accent:#0b57a4; --card:#fff; }
-      @media (prefers-color-scheme: dark) { :root { --bg:#111214; --fg:#ebebeb; --muted:#a3a3a3; --line:#2b2d31; --link:#86b8ff; --accent:#86b8ff; --card:#18191c; } }
+      :root {
+        --bg:#fafaf9; --fg:#17171a; --muted:#5f5f68; --line:#e6e4df; --card:#ffffff;
+        --accent:#3b4fd8; --accent-soft:#eef0fd; --link:#3b4fd8; --shadow:rgba(23,23,26,.25);
+        --warn-bg:#fdf3dc; --warn-fg:#7a5200; --radius:12px; --wide:62rem; --narrow:44rem;
+        color-scheme:light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg:#0f1013; --fg:#ececef; --muted:#a2a2ad; --line:#26282e; --card:#16171b;
+          --accent:#9aa8ff; --accent-soft:#1c2040; --link:#9aa8ff; --shadow:rgba(0,0,0,.7);
+          --warn-bg:#3a2e12; --warn-fg:#f3cf7a; }
+      }
       *, *::before, *::after { box-sizing:border-box; }
-      body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; -webkit-text-size-adjust:100%; }
-      header.site, main, footer.site { max-width:44rem; margin:0 auto; padding:0 1rem; }
-      header.site { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:.5rem 1.5rem; padding-top:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--line); }
-      header.site .name { font-weight:700; color:var(--fg); text-decoration:none; }
-      header.site nav { display:flex; gap:1.1rem; }
-      header.site nav a { color:var(--muted); text-decoration:none; }
+      html { -webkit-text-size-adjust:100%; }
+      body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.65 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; font-feature-settings:'cv11','ss01'; }
+      header.site, main, footer.site { max-width:var(--wide); margin:0 auto; padding-left:1.25rem; padding-right:1.25rem; }
+      header.site { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.5rem 1.5rem; padding-top:1.25rem; padding-bottom:1.25rem; }
+      header.site .name { font-weight:700; letter-spacing:-.01em; color:var(--fg); text-decoration:none; display:flex; align-items:center; gap:.55rem; }
+      header.site .name::before { content:'AD'; display:inline-grid; place-items:center; width:1.9rem; height:1.9rem; border-radius:8px; background:var(--accent); color:var(--bg); font-size:.72rem; font-weight:800; letter-spacing:.02em; }
+      header.site nav { display:flex; gap:1.25rem; }
+      header.site nav a { color:var(--muted); text-decoration:none; font-weight:500; font-size:.95rem; }
       header.site nav a[aria-current="page"], header.site nav a:hover { color:var(--fg); }
-      main { padding-top:2rem; padding-bottom:3rem; }
-      footer.site { padding-top:1.5rem; padding-bottom:2.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
+      main { padding-top:1.5rem; padding-bottom:4rem; }
+      main > article, main > .prose { max-width:var(--narrow); }
+      footer.site { padding-top:1.75rem; padding-bottom:2.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; display:flex; flex-wrap:wrap; justify-content:space-between; gap:.5rem 2rem; }
+      footer.site p { margin:0; }
       footer.site a { color:var(--muted); }
-      a { color:var(--link); text-underline-offset:.15em; }
-      h1 { font-size:2rem; line-height:1.2; letter-spacing:-.01em; margin:.5rem 0 1rem; }
-      h2 { font-size:1.35rem; line-height:1.3; margin:2.2rem 0 .6rem; }
-      h3 { font-size:1.1rem; margin:1.6rem 0 .4rem; }
-      code { font-size:.88em; overflow-wrap:anywhere; }
-      pre { overflow-x:auto; padding:1rem; background:var(--card); border:1px solid var(--line); border-radius:6px; font-size:.78rem; line-height:1.45; }
-      pre code { overflow-wrap:normal; }
+      a { color:var(--link); text-underline-offset:.18em; text-decoration-thickness:1px; }
+      h1, h2, h3 { letter-spacing:-.02em; }
+      h1 { font-size:2rem; line-height:1.15; font-weight:750; margin:.5rem 0 1rem; }
+      h2 { font-size:1.35rem; line-height:1.3; font-weight:700; margin:2.4rem 0 .7rem; }
+      h3 { font-size:1.1rem; font-weight:650; margin:1.6rem 0 .4rem; }
+      code { font-size:.86em; overflow-wrap:anywhere; font-family:ui-monospace, 'SF Mono', Menlo, monospace; background:var(--accent-soft); padding:.08em .32em; border-radius:4px; }
+      pre { overflow-x:auto; padding:1rem; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); font-size:.78rem; line-height:1.5; }
+      pre code { overflow-wrap:normal; background:none; padding:0; }
       .muted { color:var(--muted); }
-      .crumbs { font-size:.9rem; color:var(--muted); margin:0; }
-      .crumbs a { color:var(--muted); }
+      .crumbs { font-size:.88rem; margin:0; }
+      .crumbs a { color:var(--muted); text-decoration:none; }
+      .crumbs a::before { content:'← '; }
+      .btn { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem 1.05rem; border-radius:999px; font-weight:600; font-size:.93rem; text-decoration:none; border:1.5px solid var(--accent); background:var(--accent); color:var(--bg); transition:transform .15s, opacity .15s; }
+      .btn:hover { transform:translateY(-1px); opacity:.92; }
+      .btn.ghost { background:transparent; color:var(--fg); border-color:var(--line); }
+      .btn.ghost:hover { border-color:var(--fg); }
+      .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(17.5rem, 1fr)); gap:1rem; }
+      .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin:3.25rem 0 1rem; }
+      .section-head h2 { margin:0; }
+      .section-head a { font-size:.92rem; font-weight:600; text-decoration:none; white-space:nowrap; }
+      details > summary:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+      @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
     </style>
   </head>
   <body>
@@ -73,13 +101,13 @@ const nav = [['/work/', 'Work'], ['/projects/', 'Projects'], ['/about/', 'About'
     <main><slot /></main>
     <footer class="site">
       <p>
-        Ashutosh Dey · Backend engineer · San Francisco / Redwood City, CA ·
-        <a href="https://github.com/ashutoshdey21" rel="me">GitHub</a> ·
+        Ashutosh Dey · San Francisco / Redwood City, CA ·{' '}
+        <a href="https://github.com/ashutoshdey21" rel="me">GitHub</a> ·{' '}
         <a href="https://www.linkedin.com/in/ashutoshdey" rel="me">LinkedIn</a>
       </p>
       <p>
-        Prose and case studies: <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>. Code samples: MIT.
-        · <a href="/llms.txt">llms.txt</a> · <a href="/facts.json">facts.json</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a> (code: MIT) ·{' '}
+        <a href="/llms.txt">llms.txt</a> ·{' '}<a href="/facts.json">facts.json</a>
       </p>
     </footer>
   </body>

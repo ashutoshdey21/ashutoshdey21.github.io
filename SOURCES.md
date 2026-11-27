@@ -22,3 +22,5 @@ Source paths are relative to the private `resume-work/data/` folder, except `res
 - JSON-LD: 8 blocks checked against the schema.org vocabulary (types and property domains): 0 errors.
 - JavaScript disabled: no client JS ships; all 10 content pages render with content.
 - Width: no horizontal overflow at 360px or 1280px on all 10 content pages.
+
+**2026-11-26, redesign (progressive disclosure):** card hooks, stats and TL;DR lines added to front matter for all five entries, restating facts already in each page's sources (no new claims). Full write-ups moved behind a "Read the full case study" toggle; still server-rendered and in the `.md` twins.

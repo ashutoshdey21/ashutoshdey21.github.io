@@ -31,7 +31,7 @@ ${positioning.throughline}
 
 ## Selected results
 
-${positioning.results.map((r: any) => `- **${r.value}** ${r.label}`).join('\n')}
+${positioning.results.map((r: any) => `- **${r.value}** ${r.label} (${r.sub})`).join('\n')}
 
 ## Featured work
 

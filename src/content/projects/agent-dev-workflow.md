@@ -3,6 +3,16 @@ title: Multi-agent ticket-to-PR workflow
 summary: A Claude Code slash command I built at Thryv that takes a Jira ticket to a pull request through five sub-agents, each limited by which tools it is allowed to use.
 themes: [ai-engineering, reliability]
 weight: 3
+short: Multi-agent ticket-to-PR workflow
+hook: Five Claude Code agents take a Jira ticket to a pull request, each limited to the tools its job needs.
+stats:
+  - { value: "100+", label: "tickets, by my estimate" }
+  - { value: "~30%", label: "shorter time to merge, by my estimate" }
+  - { value: "5", label: "agents, with my approval at every phase" }
+tldr:
+  - "**Capability removal:** the reviewer cannot run builds; the shipping agent cannot edit code."
+  - "**Bounded loops:** builds retry three times and fix loops stop after three passes, then halt."
+  - "**Learns from review:** a self-reflect agent turns PR review comments into instruction updates."
 ---
 
 A custom Claude Code slash command, `/dev-workflow <ticket>`, that I built for a backend microservice repo at Thryv. It runs a phased pipeline from Jira ticket to pull request by handing off to five sub-agents in sequence. The orchestrator does no work itself; it routes on the sub-agents' structured outputs. A separate `self-reflect` agent runs on demand.

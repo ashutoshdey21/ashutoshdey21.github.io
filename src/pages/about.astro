@@ -5,57 +5,92 @@ const fmt = (d: string) => d === 'present' ? 'Present' : new Date(`${d}-01T00:00
 const ld = [
   { '@context': 'https://schema.org', '@type': 'ProfilePage', url: `${SITE}/about/`, mainEntity: personLd() },
 ];
+const principles = [
+  ['Compare options before committing', 'Three locking approaches weighed before one shipped.', '/work/advisory-locks/'],
+  ['Measure before fixing', 'A scan endpoint counted broken resources and showed a full migration wasn\'t needed.', null],
+  ['Make failures deterministic, then instrument', 'Reproduce in a test or local instance; add instrumentation where logs are silent.', '/work/debugging-the-unreproducible/'],
+  ['Assume the framework can fail silently', 'Caught a missing bean registration before launch.', '/work/cross-cloud-sqs-consumer/'],
+  ['Leave it written down', 'Runbooks, a hotfix process, an API guide with C4 diagrams, handbook fixes.', null],
+  ['Use AI agents with guardrails', 'Claude Code daily, and a multi-agent workflow where each agent has only the tools it needs.', '/projects/agent-dev-workflow/'],
+];
 ---
 <Base title="About | Ashutosh Dey" description={`About Ashutosh Dey: ${positioning.descriptor}.`} jsonld={ld} type="profile" mdTwin="/about.md">
-  <h1>About</h1>
-  <p>
-    I'm Ashutosh Dey, a backend engineer at Thryv. I joined Keap in July 2021, before Thryv acquired it, so I've
-    been there over 5 years; before that I worked at Cognizant, Tata Consultancy Services, CYR3CON and
-    CustomerDiscovery.co, and completed an MS in software engineering at Arizona State University. I build Java and Micronaut services on PostgreSQL,
-    running on GCP and AWS, and I work with Product, Analytics and SRE to ship well-tested code.
-  </p>
+  <div class="prose">
+    <h1>About</h1>
+    <p class="lede">
+      I'm a backend engineer at Thryv, where I've worked since joining Keap in July 2021. I build Java and Micronaut
+      services on PostgreSQL, running on GCP and AWS, and I work with Product, Analytics and SRE to ship well-tested code.
+    </p>
 
-  <h2>How I work</h2>
-  <ul>
-    <li><strong>Compare options before committing.</strong> For per-tenant concurrency I weighed three locking approaches before choosing PostgreSQL advisory locks (<a href="/work/advisory-locks/">case study</a>).</li>
-    <li><strong>Measure before fixing.</strong> When resources exported into Solution Launchpad were left broken, I built an admin endpoint that scanned for them and counted them by failure state. That showed a full migration wasn't needed.</li>
-    <li><strong>Make failures deterministic, then instrument.</strong> I reproduce in a test or a local instance first, and add instrumentation where the logs are silent (<a href="/work/debugging-the-unreproducible/">case study</a>).</li>
-    <li><strong>Assume the framework can fail silently.</strong> A missing bean registration would have sent every processed message to the dead-letter queue; I caught it before launch (<a href="/work/cross-cloud-sqs-consumer/">case study</a>).</li>
-    <li><strong>Leave it written down.</strong> Runbooks, a hotfix process, an API resource guide with C4 diagrams, and fixes to the engineering handbook when setup steps were missing.</li>
-    <li><strong>Use AI agents with guardrails.</strong> I use Claude Code daily, and I built a multi-agent ticket-to-PR workflow in which each agent only has the tools it needs (<a href="/projects/agent-dev-workflow/">design</a>).</li>
-  </ul>
+    <aside class="looking">
+      <p class="label">Open to</p>
+      <p>{positioning.looking_for}</p>
+      <p class="cta">
+        <a class="btn" href={profile.links.linkedin} rel="me">Message me on LinkedIn</a>
+        <a class="btn ghost" href={profile.links.github} rel="me">GitHub</a>
+      </p>
+    </aside>
 
-  <h2>What I'm looking for</h2>
-  <p>{positioning.looking_for}</p>
-  <p>The best way to reach me is <a href={profile.links.linkedin} rel="me">LinkedIn</a>. My code is on <a href={profile.links.github} rel="me">GitHub</a>.</p>
+    <h2>How I work</h2>
+    <ol class="principles">
+      {principles.map(([t, d, href]) => (
+        <li><strong>{href ? <a href={href}>{t}</a> : t}</strong><span>{d}</span></li>
+      ))}
+    </ol>
 
-  <h2>Experience</h2>
-  <ul class="timeline">
-    {profile.experience.map((e: any) => (
-      <li><span class="when">{fmt(e.start)} – {fmt(e.end)}</span><span><strong>{e.title}</strong>, {e.org}{e.note && <><br /><span class="muted">{e.note}</span></>}</span></li>
-    ))}
-  </ul>
-
-  <h2>Education</h2>
-  <ul class="timeline">
-    {profile.education.map((e: any) => <li><span class="when">{fmt(e.end)}</span><span><strong>{e.degree}</strong>, {e.org}</span></li>)}
-  </ul>
-
-  <h2>Skills</h2>
-  <dl class="skills">
-    {Object.entries(profile.skills).map(([k, v]) => <><dt>{k[0].toUpperCase() + k.slice(1)}</dt><dd>{(v as string[]).join(', ')}</dd></>)}
-  </dl>
-
-  <h2>Certifications</h2>
-  <ul>
-    {profile.certifications.map((c: any) => <li>{c.name}, {c.issuer} ({fmt(c.date)})</li>)}
-  </ul>
+    <h2>Background</h2>
+    <details class="fold">
+      <summary>Experience <span class="count">{profile.experience.length} roles since 2015</span></summary>
+      <ul class="timeline">
+        {profile.experience.map((e: any) => (
+          <li><span class="when">{fmt(e.start)} – {fmt(e.end)}</span><span><strong>{e.title}</strong>, {e.org}{e.note && <><br /><span class="muted">{e.note}</span></>}</span></li>
+        ))}
+      </ul>
+    </details>
+    <details class="fold">
+      <summary>Education <span class="count">MS, Arizona State University</span></summary>
+      <ul class="timeline">
+        {profile.education.map((e: any) => <li><span class="when">{fmt(e.end)}</span><span><strong>{e.degree}</strong>, {e.org}</span></li>)}
+      </ul>
+    </details>
+    <details class="fold">
+      <summary>Skills <span class="count">Java, PostgreSQL, AWS/GCP and more</span></summary>
+      <dl class="skills">
+        {Object.entries(profile.skills).map(([k, v]) => <><dt>{k[0].toUpperCase() + k.slice(1)}</dt><dd>{(v as string[]).join(', ')}</dd></>)}
+      </dl>
+    </details>
+    <details class="fold">
+      <summary>Certifications <span class="count">{profile.certifications.length}</span></summary>
+      <ul class="plain">
+        {profile.certifications.map((c: any) => <li>{c.name}, {c.issuer} ({fmt(c.date)})</li>)}
+      </ul>
+    </details>
+  </div>
 </Base>
 <style>
-  .timeline { list-style:none; padding:0; }
-  .timeline li { display:grid; grid-template-columns:9.5rem 1fr; gap:1rem; padding:.45rem 0; border-top:1px solid var(--line); }
-  .when { color:var(--muted); font-size:.9rem; font-variant-numeric:tabular-nums; }
+  .lede { font-size:1.15rem; line-height:1.6; }
+  .looking { margin:1.75rem 0; padding:1.2rem 1.35rem; background:var(--accent-soft); border-radius:var(--radius); }
+  .looking p { margin:0 0 .5rem; }
+  .looking .label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+  .looking .cta { display:flex; flex-wrap:wrap; gap:.6rem; margin:.9rem 0 0; }
+  .principles { list-style:none; counter-reset:p; padding:0; margin:0; display:grid; gap:.25rem; }
+  .principles li { counter-increment:p; display:grid; grid-template-columns:2rem 1fr; column-gap:.4rem; padding:.7rem 0; border-top:1px solid var(--line); }
+  .principles li::before { content:counter(p, decimal-leading-zero); grid-row:span 2; color:var(--accent); font-weight:700; font-size:.85rem; padding-top:.15rem; font-variant-numeric:tabular-nums; }
+  .principles strong a { color:var(--fg); text-decoration-color:var(--accent); }
+  .principles span { color:var(--muted); font-size:.93rem; }
+  .fold { border-top:1px solid var(--line); }
+  .fold:last-of-type { border-bottom:1px solid var(--line); }
+  .fold summary { cursor:pointer; list-style:none; padding:.9rem 0; font-weight:650; display:flex; align-items:baseline; gap:.75rem; }
+  .fold summary::-webkit-details-marker { display:none; }
+  .fold summary::after { content:'+'; margin-left:auto; color:var(--accent); font-weight:700; }
+  .fold[open] summary::after { content:'−'; }
+  .count { font-weight:400; font-size:.85rem; color:var(--muted); }
+  .timeline, .plain { list-style:none; padding:0; margin:0 0 1rem; }
+  .timeline li { display:grid; grid-template-columns:9.5rem 1fr; gap:1rem; padding:.45rem 0; }
+  .plain li { padding:.3rem 0; }
+  .when { color:var(--muted); font-size:.88rem; font-variant-numeric:tabular-nums; }
   @media (max-width:520px) { .timeline li { grid-template-columns:1fr; gap:0; } }
-  .skills dt { font-weight:600; margin-top:.6rem; }
-  .skills dd { margin:0; }
+  .skills { margin:0 0 1rem; }
+  .skills dt { font-weight:600; margin-top:.5rem; font-size:.92rem; }
+  .skills dd { margin:0; color:var(--muted); font-size:.93rem; }
 </style>

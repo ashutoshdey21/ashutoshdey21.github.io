@@ -5,6 +5,16 @@ themes: [platform, integrity, reliability]
 weight: 5
 context: Packaging Service, Solution Launchpad (Thryv/Keap)
 stack: [Java, Micronaut, PostgreSQL]
+short: Per-tenant locking with Postgres advisory locks
+hook: Compared three locking approaches and chose the one that serialized work per tenant without touching the existing install and export flows.
+stats:
+  - { value: "35%", label: "fewer install/export failures" }
+  - { value: "3", label: "locking approaches compared" }
+  - { value: "0", label: "existing flows changed" }
+tldr:
+  - "**Problem:** parallel tasks for one tenant caused row-level conflicts and data-corruption risk in export and install."
+  - "**Decision:** transaction-scoped Postgres advisory locks over database locks and Redis: no flow changes, existing infrastructure, transactional guarantees."
+  - "**Proof:** integration tests with Java concurrency utilities that force same-tenant contention."
 ---
 
 ## Problem

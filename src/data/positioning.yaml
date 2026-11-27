@@ -9,12 +9,20 @@ throughline: >-
 featured: [advisory-locks, debugging-the-unreproducible, cross-cloud-sqs-consumer]
 # Headline results on the home page. Every one must trace to resume.tex or data/ (see SOURCES.md).
 results:
-  - { value: "70%", label: "lower infrastructure cost after migrating a service database from Heroku Postgres to GCP CloudSQL" }
-  - { value: "35%", label: "fewer install/export failures with transaction-scoped PostgreSQL advisory locks" }
-  - { value: "~20%", label: "of customers adopted the Typeform–Keap integration I built, contributing to 10% customer growth" }
-  - { value: "<1% / <500ms", label: "error-rate and p95 latency gates in CI on every major endpoint group, from a K6 load-test harness" }
+  - { value: "70%", label: "lower infrastructure cost", sub: "Heroku Postgres to GCP CloudSQL migration" }
+  - { value: "35%", label: "fewer install/export failures", sub: "Transaction-scoped Postgres advisory locks", href: "/work/advisory-locks/" }
+  - { value: "~20%", label: "of customers adopted an integration I built", sub: "Typeform–Keap; contributed to 10% customer growth" }
+  - { value: "<500ms", label: "p95 latency gate in CI", sub: "K6 load tests on every major endpoint group, error rate <1%" }
+# Hero: keep it to one breath.
+hero:
+  kicker: "Hi, I'm Ashutosh Dey: a backend engineer."
+  lead: "I build backend systems that"
+  em: "stay correct"
+  tail: "under concurrency, failure and access boundaries."
+  meta: "Software Engineer II at Thryv · Java, PostgreSQL, AWS/GCP · San Francisco Bay Area"
 ai:
   heading: How I work with AI agents
+  short: "Five Claude Code agents, each limited to the tools its job needs, take a ticket to a pull request, and my approval gates every phase."
   body: >-
     I use Claude Code daily to write and review backend code. On top of it I built a multi-agent workflow
     that takes a Jira ticket to a pull request through five sub-agents. The design choices were the

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import EntryPage from '../../components/EntryPage.astro';
 import { getCollection, render } from 'astro:content';
 import { LENSES } from '../../content.config';
 import { authorRef } from '../../lib/data';
@@ -23,11 +24,7 @@ const ld = {
 ---
 <Base title={`${w.data.title} | Ashutosh Dey`} description={w.data.summary} type="article" mdTwin={`/work/${w.id}.md`}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(ld)} />
-  <p class="crumbs"><a href="/work/">Work</a></p>
-  <article>
-    <h1>{w.data.title}</h1>
-    <p class="muted">{w.data.context}{w.data.stack.length > 0 && <> · {w.data.stack.join(', ')}</>}</p>
-    <p><strong>{w.data.summary}</strong></p>
+  <EntryPage data={w.data} section={{ href: '/work/', label: 'All work' }} meta={`${w.data.context}${w.data.stack.length ? ' · ' + w.data.stack.join(', ') : ''}`} readLabel="Read the full case study">
     <Content />
-  </article>
+  </EntryPage>
 </Base>

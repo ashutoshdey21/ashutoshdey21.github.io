@@ -8,6 +8,14 @@ repo: https://github.com/ashutoshdey21/neurostore
 links:
   - { label: Source on GitHub, href: "https://github.com/ashutoshdey21/neurostore" }
   - { label: Walkthrough, href: "/neurostore/" }
+hook: Write-once signal files, SHA-256 checks on every read, and an audit log written in the same transaction. Synthetic data only.
+stats:
+  - { value: "80", label: "tests, run on Python 3.11 and 3.12" }
+  - { value: "0", label: "updates or deletes: append-only by design" }
+tldr:
+  - "**Integrity:** a checksum recorded at write time is verified on every read."
+  - "**Audit:** every read and write, including denied writes, is logged in the same transaction."
+  - "**Honest scope:** the README lists what real clinical data would still need."
 ---
 
 neurostore is a personal code sample, not production software. It covers the collect, store and retrieve loop for EEG-like multi-channel recordings with brain-stimulation event markers such as TMS pulses. **All data is synthetic.** It has never been used with real patients.
