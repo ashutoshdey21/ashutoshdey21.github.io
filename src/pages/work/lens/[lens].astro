@@ -1,0 +1,19 @@
+---
+import Base from '../../../layouts/Base.astro';
+import WorkList from '../../../components/WorkList.astro';
+import { getCollection } from 'astro:content';
+import { LENSES } from '../../../content.config';
+export function getStaticPaths() {
+  return Object.keys(LENSES).map((lens) => ({ params: { lens } }));
+}
+const lens = Astro.params.lens as keyof typeof LENSES;
+const items = (await getCollection('work'))
+  .filter((w) => w.data.themes.includes(lens))
+  .sort((a, b) => (a.data.themes.indexOf(lens) - b.data.themes.indexOf(lens)) || (b.data.weight - a.data.weight));
+---
+<Base title={`${LENSES[lens]} | Work | Ashutosh Dey`} description={`Case studies by Ashutosh Dey on ${LENSES[lens].toLowerCase()}.`}>
+  <p><a href="/">Ashutosh Dey</a> / <a href="/work/">Work</a></p>
+  <h1>{LENSES[lens]}</h1>
+  <WorkList items={items} active={lens} />
+  {items.length === 0 && <p class="muted">More case studies for this lens are coming.</p>}
+</Base>
