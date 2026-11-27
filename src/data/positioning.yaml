@@ -1,6 +1,6 @@
 # Framing for the site. Edit here to re-weight lenses; pages stay factual.
-headline: Backend engineer building systems that stay correct under concurrency, failure and access boundaries.
-descriptor: Ashutosh Dey, backend engineer (Java, PostgreSQL, AWS/GCP), San Francisco / Redwood City, CA
+headline: Software engineer building systems that stay correct under concurrency, failure and access boundaries.
+descriptor: Ashutosh Dey, software engineer (Java, PostgreSQL, AWS/GCP), San Francisco / Redwood City, CA
 throughline: >-
   I build Java and Micronaut backend services on PostgreSQL, running on GCP and AWS. Most of my work is
   authorization, event processing and platform reliability for multi-tenant products: keeping data correct
@@ -15,7 +15,7 @@ results:
   - { value: "<500ms", label: "p95 latency gate in CI", sub: "K6 load tests on every major endpoint group, error rate <1%" }
 # Hero: keep it to one breath.
 hero:
-  kicker: "Hi, I'm Ashutosh Dey: a backend engineer."
+  kicker: "Hi, I'm Ashutosh Dey: a software engineer."
   lead: "I build backend systems that"
   em: "stay correct"
   tail: "under concurrency, failure and access boundaries."
