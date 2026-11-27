@@ -12,3 +12,13 @@ Source paths are relative to the private `resume-work/data/` folder, except `res
 | `/work/advisory-locks/` | `Ashutosh - Software Engineer III.md` (lines 7–43, 227–257); `thryv-common-achievements.md` #7; 35% and "transaction-scoped": `resume.tex` 218 | 2026-11-26 | published | yes |
 | `/work/cross-cloud-sqs-consumer/` | `recurly-subscription-events-sqs-consumer.md` (all) | 2026-11-26 | published | yes |
 | `/work/debugging-the-unreproducible/` | `Ashutosh - Software Engineer III.md` (lines 139–186, 261–297); `thryv-common-achievements.md` #3, #8 | 2026-11-26 | published | yes |
+
+## Verification log
+
+**2026-11-26, Phase 1 verification (live site):**
+- Claims: every page has a claim-to-source table reviewed in session; every number on the site (39) appears in a source file or in the user's stated estimates.
+- Denylist: clean on source and on built `dist/`.
+- Lighthouse 12.8.2 (mobile) on `/`, `/about/`, `/work/cross-cloud-sqs-consumer/`: 100 for performance, accessibility, best practices and SEO.
+- JSON-LD: 8 blocks checked against the schema.org vocabulary (types and property domains): 0 errors.
+- JavaScript disabled: no client JS ships; all 10 content pages render with content.
+- Width: no horizontal overflow at 360px or 1280px on all 10 content pages.

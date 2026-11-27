@@ -10,10 +10,17 @@ const lens = Astro.params.lens as keyof typeof LENSES;
 const items = (await getCollection('work'))
   .filter((w) => w.data.themes.includes(lens))
   .sort((a, b) => (a.data.themes.indexOf(lens) - b.data.themes.indexOf(lens)) || (b.data.weight - a.data.weight));
+const projects = (await getCollection('projects')).filter((p) => p.data.themes.includes(lens));
 ---
-<Base title={`${LENSES[lens]} | Work | Ashutosh Dey`} description={`Case studies by Ashutosh Dey on ${LENSES[lens].toLowerCase()}.`}>
+<Base title={`${LENSES[lens]} | Work | Ashutosh Dey`} description={`Case studies and projects by Ashutosh Dey on ${LENSES[lens].toLowerCase()}.`}>
   <p class="crumbs"><a href="/work/">Work</a></p>
   <h1>{LENSES[lens]}</h1>
   <WorkList items={items} active={lens} />
-  {items.length === 0 && <p class="muted">More case studies for this lens are coming.</p>}
+  {projects.length > 0 && (
+    <section>
+      <h2>Related projects</h2>
+      <ul>{projects.map((p) => <li><a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.summary}</li>)}</ul>
+    </section>
+  )}
+  {items.length === 0 && projects.length === 0 && <p class="muted">More case studies for this lens are coming.</p>}
 </Base>
