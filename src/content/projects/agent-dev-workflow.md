@@ -14,7 +14,10 @@ A custom Claude Code slash command, `/dev-workflow <ticket>`, that I built for a
 - **About 5 months of accumulated learning** (late April to mid-September 2026): **41 memory files, 30 of them feedback rules**, some also written into agent instructions, consistent with the `self-reflect` loop.
 - Two surviving runs show the loop end to end: one reached Ready after **2 remediation passes**; the other reached Ready in **0 passes** and opened a draft PR of **23 files, +585 / −160 lines**.
 
-These are a floor, not a total: run state is deleted after merge and nothing logs invocations, so there is no measured count of runs, time saved, or false Ready verdicts.
+- **Over 100 tickets** taken through the pipeline, by my estimate.
+- **Roughly 30% shorter time to merge** on PRs it produced, by my estimate.
+
+The last two are my own estimates, not measurements: run state is deleted after merge and nothing logs invocations.
 
 ## Pipeline
 

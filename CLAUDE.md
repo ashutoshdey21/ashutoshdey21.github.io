@@ -7,14 +7,15 @@ Public Astro site on GitHub Pages. Local `PLAN.md` (gitignored) has the full pla
 - Private source of truth: `/Users/ashutoshdey/projects/resume-work/data/`. **Read-only. Never write there, never copy raw files here, never commit raw data (not even temporarily).**
 - Only public-safe, reviewed, hand-curated content goes in `src/content/`.
 - **Zero fabrication:** every claim traces to a line in `data/*.md` or something the user stated. No invented numbers, scope words ("owned", "led", "end-to-end") or technologies. Use "built", "implemented", "migrated" only as far as the source says.
-- Positioning: one through-line ("Backend engineer building systems that stay correct under concurrency, failure and access boundaries") plus five lenses: `platform`, `integrity`, `integration`, `reliability`, `ai-engineering`. Config lives in `src/data/positioning.yaml`. `ai-engineering` is the thinnest evidence; never the headline; design claims only (no usage counts, time saved, false-Ready rate).
+- Positioning: one through-line ("Backend engineer building systems that stay correct under concurrency, failure and access boundaries") plus five lenses: `platform`, `integrity`, `integration`, `reliability`, `ai-engineering`. Config lives in `src/data/positioning.yaml`. `ai-engineering` is the thinnest evidence; never the headline. Usage and impact numbers only as the user's stated estimates, labelled "by my estimate" (see SOURCES.md).
 
 ## Decisions (user, 2026-11-26)
 - Thryv/Keap and product names may be used. Excluded: ticket IDs, internal repo names, feature-flag names, internal URLs, anything about a private individual (do not use common-achievements item #5).
 - The 70% cost reduction (Heroku Postgres to CloudSQL) is cleared; quote it exactly as the source states it.
 - **No email address or phone number anywhere.** Contact = GitHub `ashutoshdey21` and LinkedIn `https://www.linkedin.com/in/ashutoshdey` only. Location: San Francisco / Redwood City, CA.
 - No headshot. Prose and case studies CC BY 4.0, code MIT.
-- The SQS consumer was **not live in production**; the dev workflow has **no measured impact**. Say so plainly.
+- The SQS consumer was **not live in production**. Say so plainly.
+- Quantify every claim. Use real numbers from `data/` first; where none exist, ask the user for a ballpark and label it as their estimate. Never invent a number. User-stated estimates (2026-11-26): dev workflow ran on over 100 tickets; roughly 30% shorter time to merge; no other team members used it yet.
 - neurostore: synthetic data only; never imply real patients or production.
 
 ## Workflow
