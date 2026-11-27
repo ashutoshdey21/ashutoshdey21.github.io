@@ -15,7 +15,7 @@ Public Astro site on GitHub Pages. Local `PLAN.md` (gitignored) has the full pla
 - **No email address or phone number anywhere.** Contact = GitHub `ashutoshdey21` and LinkedIn `https://www.linkedin.com/in/ashutoshdey` only. Location: San Francisco / Redwood City, CA.
 - No headshot. Prose and case studies CC BY 4.0, code MIT.
 - The SQS consumer was **not live in production**. Say so plainly.
-- Quantify every claim. Use real numbers from `data/` first; where none exist, ask the user for a ballpark and label it as their estimate. Never invent a number. User-stated estimates (2026-11-26): dev workflow ran on over 100 tickets; roughly 30% shorter time to merge; no other team members used it yet.
+- Quantify every claim. Use every real number in `data/`; where none exists, state the fact without a number (don't ask the user for one). Never invent a number. User-volunteered estimates are labelled as theirs. User-stated estimates (2026-11-26): dev workflow ran on over 100 tickets; roughly 30% shorter time to merge; no other team members used it yet.
 - neurostore: synthetic data only; never imply real patients or production.
 
 ## Workflow
